@@ -215,7 +215,7 @@ body {
      ============================================ -->
 <div class="main-container">
 
-    {% assign all_collections = collections  %}
+    {% assign all_collections = collections | limit: 5 %}
 
     {% if all_collections.size > 0 %}
         {% for collection in all_collections %}
@@ -292,7 +292,7 @@ body {
       "settings": {
         "subtitle": "BROWSE BY CATEGORY",
         "title": "System Categories",
-        
+        "collection_limit": 5
       }
     }
   ]
