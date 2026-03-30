@@ -1,8 +1,3 @@
-<div class="header">
-    <p class="subtitle">{{ section.settings.subtitle | default: "BROWSE BY CATEGORY" }}</p>
-    <h1>{{ section.settings.title | default: "System Categories" }}</h1>
-</div>
-
 <div class="main-container">
     {% assign all_products = collections.all.products %}
     {% assign product_count = all_products.size %}
@@ -30,67 +25,4 @@
 
         </div>
     {% endfor %}
-
 </div>
-
-<style>
-.main-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 275px;
-    gap: 20px;
-    padding: 40px;
-    position: relative;
-}
-
-.collection-card {
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    color: #fff;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.4s ease;
-}
-
-.collection-card:hover { transform: scale(1.04); }
-
-.collection-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-    z-index: 1;
-}
-
-.text {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-    z-index: 2;
-    max-width: 80%;
-}
-
-.text h3 { font-size: 22px; font-weight: bold; margin-bottom: 8px; line-height: 1.2; }
-.text p { font-size: 14px; opacity: 0.9; line-height: 1.4; margin-bottom: 5px; }
-.text span { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-
-.first-card { grid-column: span 2; grid-row: span 2; }
-
-/* Responsive */
-@media (max-width:768px) {
-    .main-container { grid-template-columns: 1fr; grid-auto-rows: 250px; padding: 20px; }
-    .first-card { grid-column: span 1; grid-row: span 1; height: 350px; }
-}
-</style>
-
-{% schema %}
-{
-  "name": "System Categories",
-  "settings": [
-    {"type": "text","id":"subtitle","label":"Subtitle","default":"BROWSE BY CATEGORY"},
-    {"type": "text","id":"title","label":"Title","default":"System Categories"}
-  ],
-  "presets":[{"name":"System Categories"}]
-}
-{% endschema %}
