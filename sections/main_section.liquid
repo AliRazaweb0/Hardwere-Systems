@@ -125,25 +125,25 @@ body {
         grid-template-columns: 1fr !important;
         grid-template-rows: auto !important;
     }
-    
+
     .main-container > div {
         height: 250px;
     }
-    
+
     .main-container > div:first-child {
         grid-column: span 1 !important;
         grid-row: span 1 !important;
         height: 350px;
     }
-    
+
     .header {
         padding: 20px 20px 0 20px;
     }
-    
+
     .header h1 {
         font-size: 24px;
     }
-    
+
     .main-container {
         padding: 20px;
     }
@@ -152,7 +152,7 @@ body {
 /* ============================================
    DYNAMIC GRID BASED ON COLLECTION COUNT
    ============================================ */
-{% assign count = section.settings.collections.count %}
+{% assign count = collections.size %}
 
 {% if count == 1 %}
 .main-container {
@@ -211,18 +211,20 @@ body {
 </div>
 
 <!-- ============================================
-     MAIN CONTAINER - DYNAMIC COLLECTIONS LOOP
+     MAIN CONTAINER - AUTO FETCH ALL COLLECTIONS
      ============================================ -->
 <div class="main-container">
 
-    {% if section.settings.collections != blank %}
-        {% for collection in section.settings.collections %}
+    {% assign all_collections = collections | limit: 5 %}
+
+    {% if all_collections.size > 0 %}
+        {% for collection in all_collections %}
             {% assign index = forloop.index %}
-            
+
             <div class="collection-card collection-{{ index }}" 
                  style="background-image: url('{{ collection.image | image_url: width: 1200 }}');"
                  {{ block.shopify_attributes }}>
-                
+
                 <a href="{{ collection.url }}">
                     <div class="text">
                         <h3>{{ collection.title | escape }}</h3>
@@ -233,15 +235,15 @@ body {
                     </div>
                 </a>
             </div>
-            
+
         {% endfor %}
     {% else %}
-        <!-- Default placeholder jab koi collection select na ho -->
+        <!-- Default placeholder jab koi collection na ho -->
         <div class="collection-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
             <div class="text">
-                <h3>No Collections Selected</h3>
-                <p>Please select collections from the section settings</p>
-                <span>GO TO SETTINGS →</span>
+                <h3>No Collections Found</h3>
+                <p>Please create collections in your Shopify admin</p>
+                <span>GO TO PRODUCTS → COLLECTIONS</span>
             </div>
         </div>
     {% endif %}
@@ -272,14 +274,16 @@ body {
     },
     {
       "type": "header",
-      "content": "Collections"
+      "content": "Collection Settings"
     },
     {
-      "type": "collection_list",
-      "id": "collections",
-      "label": "Select Collections",
-      "limit": 5,
-      "info": "Select up to 5 collections. Layout automatically adjusts based on count."
+      "type": "range",
+      "id": "collection_limit",
+      "label": "Number of Collections to Show",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "default": 5
     }
   ],
   "presets": [
@@ -287,7 +291,8 @@ body {
       "name": "System Categories",
       "settings": {
         "subtitle": "BROWSE BY CATEGORY",
-        "title": "System Categories"
+        "title": "System Categories",
+        "collection_limit": 5
       }
     }
   ]
