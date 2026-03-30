@@ -215,7 +215,7 @@ body {
      ============================================ -->
 <div class="main-container">
 
-    {% assign all_collections = collections | limit: 5 %}
+    {% assign all_collections = collections  %}
 
     {% if all_collections.size > 0 %}
         {% for collection in all_collections %}
