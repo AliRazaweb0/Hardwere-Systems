@@ -13,10 +13,10 @@
         </div>
         
         <div class="card-content">
-            <!-- Dynamic Product Title -->
+            <!-- Product Title -->
             <h3 class="card-title">{{ product.title }}</h3>
 
-            <!-- Dynamic Product Description -->
+            <!-- Product Description -->
             <p class="card-description">{{ product.description | strip_html | truncate: 100 }}</p>
 
             <!-- View System Button -->
@@ -31,3 +31,32 @@
     </div>
   {% endfor %}
 </div>
+
+<style>
+/* Ensure 3 cards per row layout */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.product-card {
+    flex: 1 1 calc(33.333% - 16px); /* 3 cards per row */
+    max-width: calc(33.333% - 16px);
+    margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+    .product-card {
+        flex: 1 1 calc(50% - 12px); /* 2 cards per row on tablet */
+        max-width: calc(50% - 12px);
+    }
+}
+
+@media (max-width: 768px) {
+    .product-card {
+        flex: 1 1 100%; /* 1 card per row on mobile */
+        max-width: 100%;
+    }
+}
+</style>
