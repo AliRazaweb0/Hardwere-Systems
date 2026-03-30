@@ -1,15 +1,15 @@
 <style>
 /* ============================================
-   TUMHARA CSS - CARDS STRUCTURE BILKUL SAME
+   TUMHARA CSS - BILKUL SAME STRUCTURE
    ============================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f8f8;
     padding: 40px;
 }
@@ -123,9 +123,10 @@ body {
 }
 
 /* ============================================
-   PRODUCT CARD - BILKUL SAME STRUCTURE
+   PRODUCT CARD - TUMHARA BILKUL SAME LAYOUT
    ============================================ */
 .product-card {
+    flex: 1;
     background-color: #ffffff;
     border-radius: 4px;
     overflow: hidden;
@@ -140,19 +141,19 @@ body {
     left: 15px;
     background-color: #1a1a1a;
     color: #ffffff;
-    padding: 8px 14px;
+    padding: 6px 12px;
     border-radius: 20px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     z-index: 10;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .product-count-badge i {
-    font-size: 11px;
+    font-size: 10px;
 }
 
 /* Image Zoom Out on Hover */
@@ -271,7 +272,6 @@ body {
     font-size: 13px;
     color: #666666;
     font-weight: 500;
-    text-decoration: none;
 }
 
 .wishlist-btn i {
@@ -295,7 +295,7 @@ body {
     .first-collection-card {
         height: 350px;
     }
-
+    
     .collection-header {
         padding: 30px 30px 0 30px;
     }
@@ -305,41 +305,59 @@ body {
     body {
         padding: 20px;
     }
-
+    
     .first-collection-card {
         height: 300px;
     }
-
+    
     .collection-header {
         padding: 20px 20px 0 20px;
     }
-
+    
     .collection-header h1 {
         font-size: 24px;
     }
-
+    
     .products-grid {
         gap: 15px;
     }
-
+    
     .card-image {
         height: 250px;
     }
-
+    
     .card-content {
         padding: 15px;
         padding-bottom: 70px;
     }
-
+    
     .card-title {
         font-size: 17px;
     }
-
+    
     .wishlist-btn {
         bottom: 15px;
         left: 15px;
         padding: 8px 16px;
         font-size: 12px;
+    }
+    
+    .heart-icon-top {
+        top: 10px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
+    }
+    
+    .heart-icon-top i {
+        font-size: 14px;
+    }
+    
+    .product-count-badge {
+        top: 10px;
+        left: 10px;
+        padding: 5px 10px;
+        font-size: 11px;
     }
 }
 </style>
@@ -350,9 +368,9 @@ body {
 <div class="container">
 
     {% if collections.size > 0 %}
-
+        
         <!-- ============================================
-             PEHLA COLLECTION - FULL WIDTH + PRODUCTS
+             PEHLA COLLECTION - FULL WIDTH
              ============================================ -->
         {% assign first_collection = collections.first %}
         <div class="first-collection">
@@ -360,7 +378,7 @@ body {
                 <p class="subtitle">{{ first_collection.title | upcase }}</p>
                 <h1>{{ first_collection.title }}</h1>
             </div>
-
+            
             <a href="{{ first_collection.url }}" class="first-collection-card" 
                style="background-image: url('{{ first_collection.image | image_url: width: 1200 }}');">
                 <div class="text">
@@ -380,24 +398,24 @@ body {
                                 <i class="fas fa-hashtag"></i>
                                 <span>{{ forloop.index }}</span>
                             </div>
-
+                            
                             <img src="{{ product.featured_image | image_url: width: 800 }}" 
                                  alt="{{ product.title | escape }}" 
                                  class="card-image">
-
+                            
                             <!-- Heart Icon Top Right -->
                             <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
                                 <i class="fas fa-heart"></i>
                             </div>
                         </div>
-
+                        
                         <div class="card-content">
                             <h3 class="card-title">{{ product.title | escape }}</h3>
                             <p class="card-description">
                                 {{ product.description | strip_html | truncate: 100 }}
                             </p>
                             <a href="{{ product.url }}" class="view-link">VIEW PRODUCT</a>
-
+                            
                             <!-- Wishlist Button Bottom Left -->
                             <button class="wishlist-btn" onclick="toggleWishlist(this)">
                                 <i class="fas fa-bookmark"></i>
@@ -419,11 +437,53 @@ body {
 </div>
 
 <script>
+    // Heart toggle function
     function toggleHeart(element) {
         element.classList.toggle('active');
+        if (element.classList.contains('active')) {
+            console.log('Liked!');
+        } else {
+            console.log('Unliked!');
+        }
     }
 
+    // Wishlist toggle function
     function toggleWishlist(element) {
         element.classList.toggle('active');
         const text = element.querySelector('span');
-        text.textContent = element.clas<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>
+        if (element.classList.contains('active')) {
+            text.textContent = 'Saved';
+            console.log('Added to wishlist!');
+        } else {
+            text.textContent = 'Wishlist';
+            console.log('Removed from wishlist!');
+        }
+    }
+</script>
+
+{% schema %}
+{
+  "name": "Products Grid 3 Per Row",
+  "tag": "section",
+  "class": "products-grid-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "BROWSE BY CATEGORY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "System Categories"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products Grid 3 Per Row"
+    }
+  ]
+}
+{% endschema %}
