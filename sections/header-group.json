@@ -88,10 +88,22 @@
       "type": "Header_First_section",
       "name": "Header_First_section",
       "settings": {}
+    },
+    "main_section_rqeQHf": {
+      "type": "main_section",
+      "name": "Mainsection",
+      "settings": {}
+    },
+    "footer_section_AjVHVG": {
+      "type": "footer_section",
+      "name": "Footer_sectrion",
+      "settings": {}
     }
   },
   "order": [
     "header_section",
-    "header_first_section_MXFRyj"
+    "header_first_section_MXFRyj",
+    "main_section_rqeQHf",
+    "footer_section_AjVHVG"
   ]
 }
