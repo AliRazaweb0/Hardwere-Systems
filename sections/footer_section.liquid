@@ -1,15 +1,14 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-/* ============================================
-   TUMHARA CSS - BILKUL SAME STRUCTURE
-   ============================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f8f8;
     padding: 40px;
 }
@@ -19,91 +18,26 @@ body {
     margin: 0 auto;
 }
 
-/* ============================================
-   COLLECTION HEADER
-   ============================================ */
-.collection-header {
-    padding: 40px 40px 0 40px;
-    margin-bottom: 20px;
+/* Section Header */
+.section-header {
+    margin-bottom: 30px;
 }
 
-.collection-header .subtitle {
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: #888;
-    margin-bottom: 8px;
+.section-subtitle {
+    color: #888888;
+    font-size: 12px;
+    letter-spacing: 1px;
     text-transform: uppercase;
-}
-
-.collection-header h1 {
-    font-size: 30px;
-    color: #222;
-    font-weight: bold;
-}
-
-/* ============================================
-   FIRST COLLECTION - FULL WIDTH
-   ============================================ */
-.first-collection {
-    margin-bottom: 60px;
-}
-
-.first-collection-card {
-    display: block;
-    height: 450px;
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    color: #fff;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    transition: transform 0.4s ease;
-    text-decoration: none;
-    margin-bottom: 40px;
-}
-
-.first-collection-card:hover {
-    transform: scale(1.04);
-}
-
-.first-collection-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-    z-index: 1;
-}
-
-.first-collection-card .text {
-    position: absolute;
-    bottom: 25px;
-    left: 25px;
-    z-index: 2;
-    max-width: 80%;
-}
-
-.first-collection-card .text h3 {
-    font-size: 22px;
-    font-weight: bold;
     margin-bottom: 8px;
 }
 
-.first-collection-card .text p {
-    font-size: 14px;
-    opacity: 0.9;
-    margin-bottom: 10px;
-}
-
-.first-collection-card .text span {
-    font-size: 13px;
+.section-title {
+    color: #1a1a1a;
+    font-size: 32px;
     font-weight: bold;
-    text-transform: uppercase;
 }
 
-/* ============================================
-   PRODUCTS GRID - 3 PER ROW
-   ============================================ */
+/* Products Grid - 3 Per Row */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -122,11 +56,8 @@ body {
     }
 }
 
-/* ============================================
-   PRODUCT CARD - TUMHARA BILKUL SAME LAYOUT
-   ============================================ */
+/* Product Card */
 .product-card {
-    flex: 1;
     background-color: #ffffff;
     border-radius: 4px;
     overflow: hidden;
@@ -134,7 +65,7 @@ body {
     position: relative;
 }
 
-/* Product Count Badge - TOP LEFT CORNER */
+/* Product Count Badge - TOP LEFT */
 .product-count-badge {
     position: absolute;
     top: 15px;
@@ -149,14 +80,9 @@ body {
     display: flex;
     align-items: center;
     gap: 5px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.product-count-badge i {
-    font-size: 10px;
-}
-
-/* Image Zoom Out on Hover */
+/* Image Wrapper */
 .image-wrapper {
     overflow: hidden;
     position: relative;
@@ -174,7 +100,7 @@ body {
     transform: scale(0.95);
 }
 
-/* Heart Icon - Top Right Corner */
+/* Heart Icon - Top Right */
 .heart-icon-top {
     position: absolute;
     top: 15px;
@@ -190,12 +116,6 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     z-index: 10;
-}
-
-.heart-icon-top i {
-    font-size: 16px;
-    color: #070000;
-    transition: all 0.3s ease;
 }
 
 .heart-icon-top:hover {
@@ -227,7 +147,6 @@ body {
     font-weight: 600;
     color: #1a1a1a;
     margin-bottom: 12px;
-    line-height: 1.3;
 }
 
 .card-description {
@@ -237,14 +156,13 @@ body {
     margin-bottom: 20px;
 }
 
-/* Static View Link */
+/* View Link */
 .view-link {
     font-size: 13px;
     font-weight: 600;
     color: #1a1a1a;
     text-decoration: none;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -255,7 +173,7 @@ body {
     font-size: 14px;
 }
 
-/* Wishlist Button - Bottom Left Sticky */
+/* Wishlist Button */
 .wishlist-btn {
     position: absolute;
     bottom: 20px;
@@ -274,10 +192,6 @@ body {
     font-weight: 500;
 }
 
-.wishlist-btn i {
-    font-size: 14px;
-}
-
 .wishlist-btn:hover {
     background-color: #fff5f5;
     border-color: #ff6b9d;
@@ -289,200 +203,70 @@ body {
     border-color: #e74c3c;
     color: #ffffff;
 }
-
-/* Responsive */
-@media (max-width: 1024px) {
-    .first-collection-card {
-        height: 350px;
-    }
-    
-    .collection-header {
-        padding: 30px 30px 0 30px;
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding: 20px;
-    }
-    
-    .first-collection-card {
-        height: 300px;
-    }
-    
-    .collection-header {
-        padding: 20px 20px 0 20px;
-    }
-    
-    .collection-header h1 {
-        font-size: 24px;
-    }
-    
-    .products-grid {
-        gap: 15px;
-    }
-    
-    .card-image {
-        height: 250px;
-    }
-    
-    .card-content {
-        padding: 15px;
-        padding-bottom: 70px;
-    }
-    
-    .card-title {
-        font-size: 17px;
-    }
-    
-    .wishlist-btn {
-        bottom: 15px;
-        left: 15px;
-        padding: 8px 16px;
-        font-size: 12px;
-    }
-    
-    .heart-icon-top {
-        top: 10px;
-        right: 10px;
-        width: 32px;
-        height: 32px;
-    }
-    
-    .heart-icon-top i {
-        font-size: 14px;
-    }
-    
-    .product-count-badge {
-        top: 10px;
-        left: 10px;
-        padding: 5px 10px;
-        font-size: 11px;
-    }
-}
 </style>
-
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <div class="container">
 
-    {% if collections.size > 0 %}
-        
-        <!-- ============================================
-             PEHLA COLLECTION - FULL WIDTH
-             ============================================ -->
-        {% assign first_collection = collections.first %}
-        <div class="first-collection">
-            <div class="collection-header">
-                <p class="subtitle">{{ first_collection.title | upcase }}</p>
-                <h1>{{ first_collection.title }}</h1>
-            </div>
-            
-            <a href="{{ first_collection.url }}" class="first-collection-card" 
-               style="background-image: url('{{ first_collection.image | image_url: width: 1200 }}');">
-                <div class="text">
-                    <h3>{{ first_collection.title | escape }}</h3>
-                    <p>{{ first_collection.description | strip_html | truncate: 120 }}</p>
-                    <span>EXPLORE SYSTEMS →</span>
-                </div>
-            </a>
+    <div class="section-header">
+        <p class="section-subtitle">{{ collections.first.products.size }} Systems Available</p>
+        <h1 class="section-title">Systems</h1>
+    </div>
 
-            <!-- Products Grid - 3 PER ROW -->
-            <div class="products-grid">
-                {% for product in first_collection.products %}
-                    <div class="product-card">
-                        <div class="image-wrapper">
-                            <!-- Product Count Badge - TOP LEFT -->
-                            <div class="product-count-badge">
-                                <i class="fas fa-hashtag"></i>
-                                <span>{{ forloop.index }}</span>
-                            </div>
-                            
-                            <img src="{{ product.featured_image | image_url: width: 800 }}" 
-                                 alt="{{ product.title | escape }}" 
-                                 class="card-image">
-                            
-                            <!-- Heart Icon Top Right -->
-                            <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                                <i class="fas fa-heart"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="card-content">
-                            <h3 class="card-title">{{ product.title | escape }}</h3>
-                            <p class="card-description">
-                                {{ product.description | strip_html | truncate: 100 }}
-                            </p>
-                            <a href="{{ product.url }}" class="view-link">VIEW PRODUCT</a>
-                            
-                            <!-- Wishlist Button Bottom Left -->
-                            <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                                <i class="fas fa-bookmark"></i>
-                                <span>Wishlist</span>
-                            </button>
-                        </div>
+    <div class="products-grid">
+
+        {% for product in collections.first.products %}
+            <div class="product-card">
+                <div class="image-wrapper">
+                    <div class="product-count-badge">
+                        <i class="fas fa-hashtag"></i>
+                        <span>{{ forloop.index }}</span>
                     </div>
-                {% endfor %}
-            </div>
-        </div>
 
-    {% else %}
-        <div style="text-align: center; padding: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: #fff;">
-            <h3>No Collections Found</h3>
-            <p>Please create collections in your Shopify admin</p>
-        </div>
-    {% endif %}
+                    <img src="{{ product.featured_image | image_url: width: 800 }}" 
+                         alt="{{ product.title }}" 
+                         class="card-image">
+
+                    <div class="heart-icon-top" onclick="toggleHeart(this)">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <h3 class="card-title">{{ product.title }}</h3>
+                    <p class="card-description">{{ product.description | strip_html | truncate: 120 }}</p>
+                    <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+
+                    <button class="wishlist-btn" onclick="toggleWishlist(this)">
+                        <i class="fas fa-bookmark"></i>
+                        <span>Wishlist</span>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
 
 </div>
 
 <script>
-    // Heart toggle function
     function toggleHeart(element) {
         element.classList.toggle('active');
-        if (element.classList.contains('active')) {
-            console.log('Liked!');
-        } else {
-            console.log('Unliked!');
-        }
     }
 
-    // Wishlist toggle function
     function toggleWishlist(element) {
         element.classList.toggle('active');
         const text = element.querySelector('span');
-        if (element.classList.contains('active')) {
-            text.textContent = 'Saved';
-            console.log('Added to wishlist!');
-        } else {
-            text.textContent = 'Wishlist';
-            console.log('Removed from wishlist!');
-        }
+        text.textContent = element.classList.contains('active') ? 'Saved' : 'Wishlist';
     }
 </script>
 
 {% schema %}
 {
-  "name": "Products Grid 3 Per Row",
-  "tag": "section",
-  "class": "products-grid-section",
-  "settings": [
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "BROWSE BY CATEGORY"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "System Categories"
-    }
-  ],
+  "name": "Products Grid",
+  "settings": [],
   "presets": [
     {
-      "name": "Products Grid 3 Per Row"
+      "name": "Products Grid"
     }
   ]
 }
