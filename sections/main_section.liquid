@@ -143,13 +143,151 @@ body {
             </div>
         </div>
     </div>
- {% schema %}
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+}
+
+.header {
+    padding: 40px 40px 0 40px;
+}
+
+.header .subtitle {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.header h1 {
+    font-size: 30px;
+    color: #222;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 180px) repeat(2, 275px);
+    gap: 20px;
+    padding: 40px;
+}
+
+.main-container > div {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    color: #fff;
+    background-size: cover;
+    background-position: center;
+}
+
+.pic1 {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.main-container > div::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    z-index: 1;
+}
+
+.text {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    z-index: 2;
+    max-width: 80%;
+}
+
+.text h3 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.text p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.text span {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.main-container > div:hover {
+    transform: scale(1.04);
+    transition: 0.4s;
+    cursor: pointer;
+}
+</style>
+
+<div class="header">
+    <p class="subtitle">BROWSE BY CATEGORY</p>
+    <h1>System Categories</h1>
+</div>
+
+<div class="main-container">
+    {% for block in section.blocks %}
+        <div class="pic{{ forloop.index }}" 
+             style="background-image: url({{ block.settings.collection.image | image_url }})">
+
+            <a href="{{ block.settings.collection.url }}" style="display:block; width:100%; height:100%;">
+                <div class="text">
+                    <h3>{{ block.settings.collection.title }}</h3>
+
+                    <!-- STATIC DESCRIPTION -->
+                    <p>Premium glass balustrade and pool fencing systems for residential and commercial projects.</p>
+
+                    <span>EXPLORE SYSTEMS →</span>
+                </div>
+            </a>
+
+        </div>
+    {% endfor %}
+</div>
+
+{% schema %}
 {
   "name": "Mainsection",
   "settings": [],
+  "blocks": [
+    {
+      "type": "collection_block",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "Mainsection"
+      "name": "Mainsection",
+      "blocks": [
+        { "type": "collection_block" },
+        { "type": "collection_block" },
+        { "type": "collection_block" },
+        { "type": "collection_block" },
+        { "type": "collection_block" }
+      ]
     }
   ]
 }
