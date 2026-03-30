@@ -1,5 +1,7 @@
 <style>
-/* TUMHARA CSS BILKUL SAME */
+/* ============================================
+   TUMHARA CSS - BILKUL SAME RAKHA HAI
+   ============================================ */
 * {
     margin: 0;
     padding: 0;
@@ -20,11 +22,13 @@ body {
     letter-spacing: 3px;
     color: #888;
     margin-bottom: 8px;
+    text-transform: uppercase;
 }
 
 .header h1 {
     font-size: 30px;
     color: #222;
+    font-weight: bold;
 }
 
 .main-container {
@@ -44,21 +48,25 @@ body {
     color: #fff;
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
-.pic1 {
+/* First item bada rahega jab 5 collections ho */
+.main-container > div:first-child {
     grid-column: span 2;
     grid-row: span 2;
 }
 
+/* Gradient overlay */
 .main-container > div::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
     z-index: 1;
 }
 
+/* Text styling */
 .text {
     position: absolute;
     bottom: 25px;
@@ -71,11 +79,14 @@ body {
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 8px;
+    line-height: 1.2;
 }
 
 .text p {
     font-size: 14px;
     opacity: 0.9;
+    line-height: 1.4;
+    margin-bottom: 5px;
 }
 
 .text span {
@@ -83,63 +94,201 @@ body {
     margin-top: 10px;
     font-size: 13px;
     font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Hover effect */
+.main-container > div {
+    transition: transform 0.4s ease;
 }
 
 .main-container > div:hover {
     transform: scale(1.04);
-    transition: 0.4s;
     cursor: pointer;
 }
+
+/* Link styling - pura card clickable */
+.main-container > div > a {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE KE LIYE
+   ============================================ */
+@media (max-width: 768px) {
+    .main-container {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto !important;
+    }
+    
+    .main-container > div {
+        height: 250px;
+    }
+    
+    .main-container > div:first-child {
+        grid-column: span 1 !important;
+        grid-row: span 1 !important;
+        height: 350px;
+    }
+    
+    .header {
+        padding: 20px 20px 0 20px;
+    }
+    
+    .header h1 {
+        font-size: 24px;
+    }
+    
+    .main-container {
+        padding: 20px;
+    }
+}
+
+/* ============================================
+   DYNAMIC GRID BASED ON COLLECTION COUNT
+   ============================================ */
+{% assign count = section.settings.collections.count %}
+
+{% if count == 1 %}
+.main-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 450px;
+}
+.main-container > div:first-child {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+{% elsif count == 2 %}
+.main-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 400px;
+}
+.main-container > div:first-child {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+{% elsif count == 3 %}
+.main-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 350px 200px;
+}
+.main-container > div:first-child {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+{% elsif count == 4 %}
+.main-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 275px);
+}
+.main-container > div:first-child {
+    grid-column: span 1;
+    grid-row: span 1;
+}
+{% elsif count >= 5 %}
+.main-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 180px) repeat(2, 275px);
+}
+.main-container > div:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+{% endif %}
 </style>
 
+<!-- ============================================
+     HEADER SECTION
+     ============================================ -->
 <div class="header">
-    <p class="subtitle">BROWSE BY CATEGORY</p>
-    <h1>System Categories</h1>
+    <p class="subtitle">{{ section.settings.subtitle | default: "BROWSE BY CATEGORY" }}</p>
+    <h1>{{ section.settings.title | default: "System Categories" }}</h1>
 </div>
 
+<!-- ============================================
+     MAIN CONTAINER - DYNAMIC COLLECTIONS LOOP
+     ============================================ -->
 <div class="main-container">
 
-    <div class="main-container">
-
-{% assign col_links = linklists['homepage-collections'].links %}
-
-{% for link in col_links %}
-  {% assign collection = link.object %}
-
-  <div class="pic{{ forloop.index }}" 
-       style="background-image: url({{ collection.image | image_url }})">
-
-    <a href="{{ collection.url }}">
-      <div class="text">
-        <h3>{{ collection.title }}</h3>
-        <p>{{ collection.description | strip_html | truncate: 120 }}</p>
-        <span>EXPLORE SYSTEMS →</span>
-      </div>
-    </a>
-
-  </div>
-
-{% endfor %}
-
-</div>
+    {% if section.settings.collections != blank %}
+        {% for collection in section.settings.collections %}
+            {% assign index = forloop.index %}
+            
+            <div class="collection-card collection-{{ index }}" 
+                 style="background-image: url('{{ collection.image | image_url: width: 1200 }}');"
+                 {{ block.shopify_attributes }}>
+                
+                <a href="{{ collection.url }}">
+                    <div class="text">
+                        <h3>{{ collection.title | escape }}</h3>
+                        {% if collection.description != blank %}
+                            <p>{{ collection.description | strip_html | truncate: 120 }}</p>
+                        {% endif %}
+                        <span>EXPLORE SYSTEMS →</span>
+                    </div>
+                </a>
+            </div>
+            
+        {% endfor %}
+    {% else %}
+        <!-- Default placeholder jab koi collection select na ho -->
+        <div class="collection-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="text">
+                <h3>No Collections Selected</h3>
+                <p>Please select collections from the section settings</p>
+                <span>GO TO SETTINGS →</span>
+            </div>
+        </div>
+    {% endif %}
 
 </div>
 
 {% schema %}
 {
-  "name": "Mainsection",
-  "settings": [],
-  "blocks": [
+  "name": "System Categories",
+  "tag": "section",
+  "class": "system-categories-section",
+  "settings": [
     {
-      "type": "collection_block",
-      "name": "Collection",
-      "settings": [
-      ]
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "BROWSE BY CATEGORY"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "System Categories"
+    },
+    {
+      "type": "header",
+      "content": "Collections"
+    },
+    {
+      "type": "collection_list",
+      "id": "collections",
+      "label": "Select Collections",
+      "limit": 5,
+      "info": "Select up to 5 collections. Layout automatically adjusts based on count."
     }
   ],
   "presets": [
     {
-      "name": "Mainsection",
+      "name": "System Categories",
+      "settings": {
+        "subtitle": "BROWSE BY CATEGORY",
+        "title": "System Categories"
+      }
     }
   ]
 }
