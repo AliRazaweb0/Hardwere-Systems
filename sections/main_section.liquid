@@ -99,72 +99,29 @@ body {
 
 <div class="main-container">
 
-    {% assign blocks = section.blocks %}
+    <div class="main-container">
 
-    <!-- PIC 1 -->
-    {% if blocks.size > 0 %}
-    <div class="pic1" style="background-image: url({{ blocks[0].settings.collection.image | image_url }})">
-        <a href="{{ blocks[0].settings.collection.url }}">
-            <div class="text">
-                <h3>{{ blocks[0].settings.collection.title }}</h3>
-                <p>{{ blocks[0].settings.collection.description | strip_html | truncate: 120 }}</p>
-                <span>EXPLORE SYSTEMS →</span>
-            </div>
-        </a>
-    </div>
-    {% endif %}
+{% assign col_links = linklists['homepage-collections'].links %}
 
-    <!-- PIC 2 -->
-    {% if blocks.size > 1 %}
-    <div class="pic2" style="background-image: url({{ blocks[1].settings.collection.image | image_url }})">
-        <a href="{{ blocks[1].settings.collection.url }}">
-            <div class="text">
-                <h3>{{ blocks[1].settings.collection.title }}</h3>
-                <p>{{ blocks[1].settings.collection.description | strip_html | truncate: 120 }}</p>
-                <span>EXPLORE SYSTEMS →</span>
-            </div>
-        </a>
-    </div>
-    {% endif %}
+{% for link in col_links %}
+  {% assign collection = link.object %}
 
-    <!-- PIC 3 -->
-    {% if blocks.size > 2 %}
-    <div class="pic3" style="background-image: url({{ blocks[2].settings.collection.image | image_url }})">
-        <a href="{{ blocks[2].settings.collection.url }}">
-            <div class="text">
-                <h3>{{ blocks[2].settings.collection.title }}</h3>
-                <p>{{ blocks[2].settings.collection.description | strip_html | truncate: 120 }}</p>
-                <span>EXPLORE SYSTEMS →</span>
-            </div>
-        </a>
-    </div>
-    {% endif %}
+  <div class="pic{{ forloop.index }}" 
+       style="background-image: url({{ collection.image | image_url }})">
 
-    <!-- PIC 4 -->
-    {% if blocks.size > 3 %}
-    <div class="pic4" style="background-image: url({{ blocks[3].settings.collection.image | image_url }})">
-        <a href="{{ blocks[3].settings.collection.url }}">
-            <div class="text">
-                <h3>{{ blocks[3].settings.collection.title }}</h3>
-                <p>{{ blocks[3].settings.collection.description | strip_html | truncate: 120 }}</p>
-                <span>EXPLORE SYSTEMS →</span>
-            </div>
-        </a>
-    </div>
-    {% endif %}
+    <a href="{{ collection.url }}">
+      <div class="text">
+        <h3>{{ collection.title }}</h3>
+        <p>{{ collection.description | strip_html | truncate: 120 }}</p>
+        <span>EXPLORE SYSTEMS →</span>
+      </div>
+    </a>
 
-    <!-- PIC 5 -->
-    {% if blocks.size > 4 %}
-    <div class="pic5" style="background-image: url({{ blocks[4].settings.collection.image | image_url }})">
-        <a href="{{ blocks[4].settings.collection.url }}">
-            <div class="text">
-                <h3>{{ blocks[4].settings.collection.title }}</h3>
-                <p>{{ blocks[4].settings.collection.description | strip_html | truncate: 120 }}</p>
-                <span>EXPLORE SYSTEMS →</span>
-            </div>
-        </a>
-    </div>
-    {% endif %}
+  </div>
+
+{% endfor %}
+
+</div>
 
 </div>
 
@@ -177,25 +134,12 @@ body {
       "type": "collection_block",
       "name": "Collection",
       "settings": [
-        {
-          "type": "collection",
-          "id": "collection",
-          "label": "Select Collection"
-        }
       ]
     }
   ],
-  "max_blocks": 5,
   "presets": [
     {
       "name": "Mainsection",
-      "blocks": [
-        { "type": "collection_block" },
-        { "type": "collection_block" },
-        { "type": "collection_block" },
-        { "type": "collection_block" },
-        { "type": "collection_block" }
-      ]
     }
   ]
 }
