@@ -1,413 +1,96 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<div class="header">
+    <p class="subtitle">{{ section.settings.subtitle | default: "BROWSE BY CATEGORY" }}</p>
+    <h1>{{ section.settings.title | default: "System Categories" }}</h1>
+</div>
+
+<div class="main-container">
+    {% assign all_products = collections.all.products %}
+    {% assign product_count = all_products.size %}
+
+    <!-- Top-left product count -->
+    <div style="position:absolute;top:10px;left:10px;font-size:14px;color:#fff;background:rgba(0,0,0,0.5);padding:4px 8px;border-radius:4px;z-index:20;">
+        Showing {{ product_count }} products
+    </div>
+
+    {% for product in all_products %}
+        <div class="collection-card {% if forloop.index == 1 and product_count >= 5 %}first-card{% endif %}" 
+             style="background-image: url('{{ product.featured_image | image_url: width:1200 }}');">
+
+            <a href="{{ product.url }}">
+                <div class="text">
+                    <h3>{{ product.title }}</h3>
+                    {% if product.description != blank %}
+                        <p>{{ product.description | strip_html | truncate:120 }}</p>
+                    {% else %}
+                        <p>No description available.</p>
+                    {% endif %}
+                    <span>EXPLORE SYSTEMS →</span>
+                </div>
+            </a>
+
+        </div>
+    {% endfor %}
+
+</div>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f8f8;
-    padding: 40px;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-/* Filter Buttons Section */
-.filter-section {
-    margin-bottom: 40px;
-}
-
-.filter-container {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.filter-btn {
-    padding: 10px 16px;
-    border: 1px solid #cccccc;
-    background-color: #ffffff;
-    color: #333333;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.filter-btn:hover {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    border-color: #1a1a1a;
-}
-
-.filter-btn.active {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    border-color: #1a1a1a;
-}
-
-/* Section Header */
-.section-header {
-    margin-top: 20px;
-}
-
-.section-subtitle {
-    color: #888888;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-}
-
-.section-title {
-    color: #1a1a1a;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 30px;
-}
-
-/* ============================================
-   PRODUCTS GRID - 3 PER ROW
-   ============================================ */
-.cards-container {
+.main-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 275px;
+    gap: 20px;
+    padding: 40px;
+    position: relative;
 }
 
-@media (max-width: 1024px) {
-    .cards-container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .cards-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* ============================================
-   PRODUCT CARD - TUMHARA BILKUL SAME LAYOUT
-   ============================================ */
-.product-card {
-    background-color: #ffffff;
-    border-radius: 4px;
+.collection-card {
+    position: relative;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    position: relative;
+    color: #fff;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.4s ease;
 }
 
-/* Product Count Badge - TOP LEFT CORNER */
-.product-count-badge {
+.collection-card:hover { transform: scale(1.04); }
+
+.collection-card::before {
+    content: "";
     position: absolute;
-    top: 15px;
-    left: 15px;
-    background-color: #1a1a1a;
-    color: #ffffff;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    z-index: 1;
 }
 
-.product-count-badge i {
-    font-size: 10px;
-}
-
-/* Image Zoom Out on Hover */
-.image-wrapper {
-    overflow: hidden;
-    position: relative;
-}
-
-.card-image {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
-}
-
-.product-card:hover .card-image {
-    transform: scale(0.95);
-}
-
-/* Heart Icon - Top Right Corner */
-.heart-icon-top {
+.text {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 36px;
-    height: 36px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    z-index: 10;
+    bottom: 25px;
+    left: 25px;
+    z-index: 2;
+    max-width: 80%;
 }
 
-.heart-icon-top i {
-    font-size: 16px;
-    color: #070000;
-    transition: all 0.3s ease;
-}
+.text h3 { font-size: 22px; font-weight: bold; margin-bottom: 8px; line-height: 1.2; }
+.text p { font-size: 14px; opacity: 0.9; line-height: 1.4; margin-bottom: 5px; }
+.text span { display: inline-block; margin-top: 10px; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
 
-.heart-icon-top:hover {
-    background-color: #ffffff;
-    transform: scale(1.1);
-}
-
-.heart-icon-top:hover i {
-    color: #ff6b9d;
-}
-
-.heart-icon-top.active {
-    background-color: #e74c3c;
-}
-
-.heart-icon-top.active i {
-    color: #ffffff;
-}
-
-/* Card Content */
-.card-content {
-    padding: 24px;
-    padding-bottom: 80px;
-    position: relative;
-}
-
-.card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 12px;
-    line-height: 1.3;
-}
-
-.card-description {
-    font-size: 14px;
-    color: #666666;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-/* Static View Link */
-.view-link {
-    font-size: 13px;
-    font-weight: 600;
-    color: #1a1a1a;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.view-link::after {
-    content: '→';
-    font-size: 14px;
-}
-
-/* Wishlist Button - Bottom Left Sticky */
-.wishlist-btn {
-    position: absolute;
-    bottom: 20px;
-    left: 24px;
-    padding: 10px 20px;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 13px;
-    color: #666666;
-    font-weight: 500;
-}
-
-.wishlist-btn i {
-    font-size: 14px;
-}
-
-.wishlist-btn:hover {
-    background-color: #fff5f5;
-    border-color: #ff6b9d;
-    color: #ff6b9d;
-}
-
-.wishlist-btn.active {
-    background-color: #e74c3c;
-    border-color: #e74c3c;
-    color: #ffffff;
-}
+.first-card { grid-column: span 2; grid-row: span 2; }
 
 /* Responsive */
-@media (max-width: 768px) {
-    body {
-        padding: 20px;
-    }
-
-    .cards-container {
-        gap: 15px;
-    }
-
-    .card-image {
-        height: 250px;
-    }
-
-    .card-content {
-        padding: 15px;
-        padding-bottom: 70px;
-    }
-
-    .card-title {
-        font-size: 17px;
-    }
-
-    .wishlist-btn {
-        bottom: 15px;
-        left: 15px;
-        padding: 8px 16px;
-        font-size: 12px;
-    }
-
-    .heart-icon-top {
-        top: 10px;
-        right: 10px;
-        width: 32px;
-        height: 32px;
-    }
-
-    .heart-icon-top i {
-        font-size: 14px;
-    }
-
-    .product-count-badge {
-        top: 10px;
-        left: 10px;
-        padding: 5px 10px;
-        font-size: 11px;
-    }
-
-    .filter-btn {
-        padding: 8px 12px;
-        font-size: 12px;
-    }
-
-    .section-title {
-        font-size: 24px;
-    }
-}
-
-@media (max-width: 480px) {
-    .filter-btn {
-        flex: 1;
-        min-width: calc(50% - 5px);
-    }
+@media (max-width:768px) {
+    .main-container { grid-template-columns: 1fr; grid-auto-rows: 250px; padding: 20px; }
+    .first-card { grid-column: span 1; grid-row: span 1; height: 350px; }
 }
 </style>
 
-<div class="container">
-
-    <!-- Filter Buttons Section -->
-    <div class="filter-section">
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterProducts('all')">All Systems</button>
-            <button class="filter-btn" onclick="filterProducts('balustrade')">Balustrade & Pool</button>
-            <button class="filter-btn" onclick="filterProducts('sliding')">Sliding Door</button>
-            <button class="filter-btn" onclick="filterProducts('shower')">Shower</button>
-            <button class="filter-btn" onclick="filterProducts('canopy')">Canopy & Facade</button>
-            <button class="filter-btn" onclick="filterProducts('commercial')">Commercial Doors & Partitions</button>
-        </div>
-
-        <!-- Section Header -->
-        <div class="section-header">
-            <p class="section-subtitle">{{ collections.first.products.size | default: 0 }} Systems Available</p>
-            <h1 class="section-title">Systems</h1>
-        </div>
-    </div>
-
-    <!-- Products Grid Container -->
-    <div class="cards-container" id="productsGrid">
-
-        {% if collections.first.products.size > 0 %}
-            {% for product in collections.first.products %}
-                <div class="product-card" data-category="{{ product.collections.first.title | handleize }}">
-                    <div class="image-wrapper">
-                        <!-- Product Count Badge - TOP LEFT -->
-                        <div class="product-count-badge">
-                            <i class="fas fa-hashtag"></i>
-                            <span>{{ forloop.index }}</span>
-                        </div>
-
-                        <img src="{{ product.featured_image | image_url: width: 800 }}" 
-                             alt="{{ product.title | escape }}" 
-                             class="card-image">
-
-                        <!-- Heart Icon Top Right -->
-                        <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <h3 class="card-title">{{ product.title | escape }}</h3>
-                        <p class="card-description">
-                            {{ product.description | strip_html | truncate: 120 }}
-                        </p>
-                        <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-
-                        <!-- Wishlist Button Bottom Left -->
-                        <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <i class="fas fa-bookmark"></i>
-                            <span>Wishlist</span>
-                        </button>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <!-- Static fallback products jab tak real products na aaye -->
-            <div class="product-card" data-category="balustrade">
-                <div class="image-wrapper">
-                    <div class="product-count-badge">
-                        <i class="fas fa-hashtag"></i>
-                        <span>1</span>
-                    </div>
-                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&h=600&fit=crop" 
-                         alt="SmartLock Channel" class="card-image">
-                    <div class="heart-icon-top" onclick="toggleHeart(this)">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">SmartLock™ Channel</h3>
-                    <p class="card-description">Minimalist frameless glass panels with concealed channel fixings.</p>
-                    <a href="#" class="view-link">VIEW SYSTEM</a>
-                    <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                        <i class="fas fa-bookmark"></i>
-                        <span>Wishlist</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="product-card" data-category="balustr<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>{% endif %}
+{% schema %}
+{
+  "name": "System Categories",
+  "settings": [
+    {"type": "text","id":"subtitle","label":"Subtitle","default":"BROWSE BY CATEGORY"},
+    {"type": "text","id":"title","label":"Title","default":"System Categories"}
+  ],
+  "presets":[{"name":"System Categories"}]
+}
+{% endschema %}
