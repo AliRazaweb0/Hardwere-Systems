@@ -1,6 +1,6 @@
 <style>
 /* ============================================
-   TUMHARA CSS - UNIFORM 4-COLUMN LAYOUT
+   TUMHARA CSS - FIRST FULL WIDTH, REST 2 PER ROW
    ============================================ */
 * {
     margin: 0;
@@ -32,22 +32,21 @@ body {
 }
 
 /* ============================================
-   MAIN CONTAINER - 4 COLUMN GRID
+   MAIN CONTAINER - 2 COLUMN GRID BASE
    ============================================ */
 .main-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     padding: 40px;
 }
 
 /* ============================================
-   PEHLE 2 COLLECTIONS - BADE CARDS
+   FIRST COLLECTION - FULL WIDTH (SPAN 2)
    ============================================ */
-.main-container > div:nth-child(1),
-.main-container > div:nth-child(2) {
+.main-container > div:first-child {
     grid-column: span 2;
-    height: 550px;
+    height: 450px;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -59,9 +58,9 @@ body {
 }
 
 /* ============================================
-   BAQI SAB COLLECTIONS - CHOTE CARDS (4 PER ROW)
+   BAQI SAB COLLECTIONS - 2 PER ROW (SPAN 1)
    ============================================ */
-.main-container > div:nth-child(n+3) {
+.main-container > div:not(:first-child) {
     grid-column: span 1;
     height: 275px;
     position: relative;
@@ -131,28 +130,20 @@ body {
 }
 
 /* ============================================
-   RESPONSIVE - TABLET (2 COLUMNS)
+   RESPONSIVE - TABLET (SAME LAYOUT)
    ============================================ */
 @media (max-width: 1024px) {
     .main-container {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 30px;
         gap: 15px;
+        padding: 30px;
     }
 
-    .main-container > div:nth-child(1) {
-        grid-column: span 2;
-        height: 400px;
+    .main-container > div:first-child {
+        height: 350px;
     }
 
-    .main-container > div:nth-child(2) {
-        grid-column: span 2;
-        height: 400px;
-    }
-
-    .main-container > div:nth-child(n+3) {
-        grid-column: span 1;
-        height: 250px;
+    .main-container > div:not(:first-child) {
+        height: 220px;
     }
 }
 
@@ -166,11 +157,14 @@ body {
         gap: 15px;
     }
 
-    .main-container > div:nth-child(1),
-    .main-container > div:nth-child(2),
-    .main-container > div:nth-child(n+3) {
+    .main-container > div:first-child {
         grid-column: span 1;
         height: 300px;
+    }
+
+    .main-container > div:not(:first-child) {
+        grid-column: span 1;
+        height: 250px;
     }
 
     .header {
