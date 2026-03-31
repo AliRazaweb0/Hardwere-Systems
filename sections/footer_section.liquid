@@ -365,7 +365,7 @@
 <!-- Cards Container -->
 <div class="cards-container">
     {% for product in collections.all.products %}
-   <div class="product-card" data-category=data-category="{% for collection in product.collections %}{{ collection.handle }}{% unless forloop.last %},{% endunless %}{% endfor %}">
+   <div class="product-card"data-category="{% for collection in product.collections %}{{ collection.handle }}{% unless forloop.last %},{% endunless %}{% endfor %}">
         <div class="image-wrapper">
             <img src="{{ product.featured_image | img_url: '800x600' }}" 
                  alt="{{ product.title }}" class="card-image">
