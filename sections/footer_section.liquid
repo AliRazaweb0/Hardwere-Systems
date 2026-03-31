@@ -365,7 +365,7 @@
 <!-- Cards Container -->
 <div class="cards-container">
     {% for product in collections.all.products %}
-   <div class="product-card"data-category="{% for collection in product.collections %}{{ collection.handle }}{% unless forloop.last %},{% endunless %}{% endfor %}">
+   <div class="product-card" data-category="{{ product.collection.title }}">
         <div class="image-wrapper">
             <img src="{{ product.featured_image | img_url: '800x600' }}" 
                  alt="{{ product.title }}" class="card-image">
@@ -413,7 +413,7 @@ function activateFilter(category) {
         if(category === 'all' || !category){
             card.style.display = 'block';
         } else {
-            card.style.display = (card.dataset.category.split(',').includes(category)) ? 'block' : 'none';
+            card.style.display = (card.dataset.category === category) ? 'block' : 'none';
         }
     });
 }
@@ -425,23 +425,8 @@ activateFilter('all');
 filterButtons.forEach(btn => {
     btn.addEventListener('click', e => {
         e.preventDefault();
-
-        const category = btn.dataset.category;
-
-        // Active button
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Filter products
-        productCards.forEach(card => {
-            const categories = card.dataset.category.split(',');
-
-            if(category === 'all' || categories.includes(category)) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
-        });
+        const category = btn.dataset.category || btn.textContent.trim();
+        activateFilter(category);
     });
 });
 
