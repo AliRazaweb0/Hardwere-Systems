@@ -194,10 +194,7 @@ body {
         {% for collection in collections %}
             {% assign index = forloop.index %}
 
-            <div class="collection-card collection-{{ index }}" 
-                 data-category="{{ collection.title }}"
-                 style="background-image: url('{{ collection.image | image_url: width: 1200 }}');"
-                 {{ block.shopify_attributes }}>
+       <div class="collection-card" data-category="{{ collection.title }}">
 
                 <a href="{{ collection.url }}">
                     <div class="text">
