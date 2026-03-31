@@ -1,401 +1,191 @@
-<!-- Filter Section -->
-<div class="filter-section">
-    <div class="filter-container">
-        <!-- All Systems Button (Static) -->
-        <button class="filter-btn active" data-filter="all" onclick="filterProducts('all')">All Systems</button>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        <!-- Dynamic Collection Buttons -->
-        {% for collection in collections %}
-            {% if collection.handle != 'all' and collection.products_count > 0 %}
-                <button class="filter-btn" data-filter="{{ collection.handle }}" onclick="filterProducts('{{ collection.handle }}')">
-                    {{ collection.title }}
-                </button>
-            {% endif %}
-        {% endfor %}
+<!-- =========================
+   SYSTEM CATEGORIES SECTION
+========================= -->
+<div class="system-categories-section">
+    <p class="section-label">BROWSE BY CATEGORY</p>
+    <h2 class="section-heading">System Categories</h2>
+
+    <div class="categories-grid">
+
+        <!-- Balustrade & Pool - Large Card -->
+        <a href="/pages/systems?collection=balustrade-pool" class="category-card large">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800" alt="Balustrade & Pool">
+            <div class="card-overlay">
+                <h3>Balustrade & Pool</h3>
+                <p>Premium glass balustrade and pool fencing systems for residential and commercial projects.</p>
+                <span class="explore-link">EXPLORE SYSTEMS <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
+        <!-- Sliding Door - Small Card -->
+        <a href="/pages/systems?collection=sliding-door" class="category-card small">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600" alt="Sliding Door">
+            <div class="card-overlay">
+                <h3>Sliding Door</h3>
+                <p>High-performance sliding door track and hardware systems for seamless indoor-outdoor living.</p>
+                <span class="explore-link">EXPLORE SYSTEMS <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
+        <!-- Shower - Small Card -->
+        <a href="/pages/systems?collection=shower" class="category-card small">
+            <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600" alt="Shower">
+            <div class="card-overlay">
+                <h3>Shower</h3>
+                <p>Precision-engineered shower screen hardware and enclosure systems for modern bathrooms.</p>
+                <span class="explore-link">EXPLORE SYSTEMS <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
+        <!-- Canopy & Facade - Small Card -->
+        <a href="/pages/systems?collection=canopy-facade" class="category-card small">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600" alt="Canopy & Facade">
+            <div class="card-overlay">
+                <h3>Canopy & Facade</h3>
+                <p>Structural glass canopy and facade fixing systems for striking architectural statements.</p>
+                <span class="explore-link">EXPLORE SYSTEMS <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
+        <!-- Commercial Doors & Partitions - Small Card -->
+        <a href="/pages/systems?collection=commercial-doors-partitions" class="category-card small">
+            <img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=600" alt="Commercial Doors & Partitions">
+            <div class="card-overlay">
+                <h3>Commercial Doors & Partitions</h3>
+                <p>Heavy-duty commercial door and glass partition systems for offices, retail and hospitality.</p>
+                <span class="explore-link">EXPLORE SYSTEMS <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </a>
+
     </div>
-
-    <!-- Section Header -->
-    <div class="section-header">
-        <p class="section-subtitle"><span id="product-count">0</span> Systems Available</p>
-        <h1 class="section-title">Systems</h1>
-    </div>
-</div>
-
-<!-- Cards Container -->
-<div class="cards-container" id="products-container">
-    {% for collection in collections %}
-        {% if collection.handle != 'all' %}
-            {% for product in collection.products %}
-                <div class="product-card" data-collection="{{ collection.handle }}" data-all="true">
-                    <div class="image-wrapper">
-                        <img src="{{ product.featured_image | img_url: '600x400' }}" 
-                             alt="{{ product.title }}" class="card-image" 
-                             onerror="this.style.display='none'">
-
-                        <!-- Heart Icon Top Right -->
-                        <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <!-- Product Title -->
-                        <h3 class="card-title">{{ product.title }}</h3>
-
-                        <!-- Product Description -->
-                        <p class="card-description">{{ product.description | strip_html | truncate: 80 }}</p>
-
-                        <!-- View System Button -->
-                        <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-
-                        <!-- Wishlist Button -->
-                        <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <i class="fas fa-bookmark"></i>
-                            <span>Wishlist</span>
-                        </button>
-                    </div>
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endfor %}
 </div>
 
 <style>
-/* Filter Section Styling */
-.filter-section {
-    max-width: 1200px;
-    margin: 0 auto 30px auto;
-    padding: 0 15px;
-}
-
-/* Filter Buttons Row - Modern Pill Style */
-.filter-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 30px;
-    justify-content: flex-start;
-}
-
-.filter-btn {
-    padding: 12px 24px;
-    background-color: #ffffff;
-    border: 2px solid #e0e0e0;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #555;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    white-space: nowrap;
-}
-
-.filter-btn:hover {
-    background-color: #f5f5f5;
-    border-color: #1a1a1a;
-    color: #1a1a1a;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.filter-btn.active {
-    background-color: #1a1a1a;
-    border-color: #1a1a1a;
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(26,26,26,0.3);
-}
-
-/* Section Header - Subtitle and Title */
-.section-header {
-    text-align: left;
-    margin-bottom: 10px;
-    padding-left: 5px;
-}
-
-.section-subtitle {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 8px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-.section-title {
-    font-size: 42px;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    position: relative;
-    display: inline-block;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background-color: #ff6b9d;
-    border-radius: 2px;
-}
-
-/* Cards Container - Remove Empty Spaces */
-.cards-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+.system-categories-section {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 40px 20px;
 }
 
-.product-card {
-    background-color: #fff;
+.section-label {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.section-heading {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 30px;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 280px);
+    gap: 20px;
+}
+
+.category-card {
+    position: relative;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.product-card:hover {
+.category-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
 
-.product-card.hidden {
-    display: none !important;
+.category-card.large {
+    grid-column: span 2;
+    grid-row: span 1;
 }
 
-.image-wrapper {
-    position: relative;
-    overflow: hidden;
-    height: 220px;
+.category-card.small {
+    grid-column: span 1;
+    grid-row: span 1;
 }
 
-.card-image {
+.category-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s;
 }
 
-.product-card:hover .card-image {
-    transform: scale(1.08);
+.category-card:hover img {
+    transform: scale(1.05);
 }
 
-.heart-icon-top {
+.card-overlay {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 38px;
-    height: 38px;
-    background-color: rgba(255,255,255,0.95);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    transition: all 0.3s;
-    z-index: 20;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    color: #fff;
 }
 
-.heart-icon-top i {
-    font-size: 16px;
-    color: #666;
-    transition: all 0.3s;
-}
-
-.heart-icon-top:hover {
-    transform: scale(1.1);
-    background-color: #fff;
-}
-
-.heart-icon-top:hover i { color: #ff6b9d; }
-.heart-icon-top.active { background-color: #e74c3c; }
-.heart-icon-top.active i { color: #fff; }
-
-.card-content {
-    padding: 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding-bottom: 70px;
-}
-
-.card-title { 
-    font-size: 18px; 
-    font-weight: 700; 
-    color: #1a1a1a; 
+.card-overlay h3 {
+    font-size: 24px;
+    font-weight: 700;
     margin-bottom: 10px;
-    line-height: 1.3;
+    color: #fff;
 }
 
-.card-description { 
-    font-size: 14px; 
-    color: #666; 
-    line-height: 1.5; 
+.card-overlay p {
+    font-size: 14px;
+    line-height: 1.5;
     margin-bottom: 15px;
-    flex: 1;
+    opacity: 0.9;
+    max-width: 400px;
 }
 
-.view-link {
-    display: inline-block;
-    text-decoration: none;
-    font-weight: 600;
-    text-transform: uppercase;
+.explore-link {
     font-size: 12px;
-    color: #fff;
-    background-color: #1a1a1a;
-    padding: 10px 20px;
-    border-radius: 6px;
-    transition: all 0.3s;
-    margin-bottom: 10px;
-    text-align: center;
-    letter-spacing: 0.5px;
-}
-
-.view-link:hover { 
-    background-color: #ff6b9d; 
-    transform: translateX(3px);
-}
-
-.wishlist-btn {
-    position: absolute;
-    bottom: 18px;
-    left: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 10px 16px;
-    background-color: #fff;
-    border: 2px solid #e0e0e0;
-    border-radius: 6px;
-    font-size: 13px;
-    color: #666;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    z-index: 15;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s;
 }
 
-.wishlist-btn i { font-size: 14px; }
-
-.wishlist-btn:hover { 
-    background-color: #ff6b9d; 
-    border-color: #ff6b9d; 
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255,107,157,0.3);
+.category-card:hover .explore-link {
+    gap: 12px;
 }
 
-.wishlist-btn.active { 
-    background-color: #e74c3c; 
-    border-color: #e74c3c; 
-    color: #fff;
+.explore-link i {
+    font-size: 10px;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .cards-container { grid-template-columns: repeat(2, 1fr); }
-    .section-title { font-size: 36px; }
-    .filter-container { justify-content: center; }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-    .cards-container { grid-template-columns: 1fr; }
-    .section-title { font-size: 28px; }
-    .filter-btn { 
-        padding: 10px 18px; 
-        font-size: 12px;
-        letter-spacing: 0.5px;
+    .categories-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
     }
-    .filter-container { gap: 8px; }
-}
 
-@media (max-width: 480px) {
-    .filter-btn { 
-        padding: 8px 14px; 
-        font-size: 11px;
+    .category-card.large,
+    .category-card.small {
+        grid-column: span 1;
+        height: 280px;
     }
-    .section-title { font-size: 24px; }
+
+    .card-overlay h3 {
+        font-size: 20px;
+    }
 }
 </style>
-
-<script>
-// Product Count and Filter Function
-document.addEventListener('DOMContentLoaded', function() {
-    updateProductCount();
-    // Show all products by default
-    filterProducts('all');
-});
-
-function updateProductCount() {
-    var productCards = document.querySelectorAll('.product-card:not(.hidden)');
-    var totalProducts = productCards.length;
-    var countElement = document.getElementById('product-count');
-    if (countElement) {
-        countElement.textContent = totalProducts;
-    }
-}
-
-function filterProducts(collectionHandle) {
-    var productCards = document.querySelectorAll('.product-card');
-    var filterButtons = document.querySelectorAll('.filter-btn');
-    var visibleCount = 0;
-
-    // Update active button state
-    filterButtons.forEach(function(btn) {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-filter') === collectionHandle) {
-            btn.classList.add('active');
-        }
-    });
-
-    // Filter products
-    productCards.forEach(function(card) {
-        if (collectionHandle === 'all') {
-            card.classList.remove('hidden');
-            visibleCount++;
-        } else {
-            var cardCollection = card.getAttribute('data-collection');
-            if (cardCollection === collectionHandle) {
-                card.classList.remove('hidden');
-                visibleCount++;
-            } else {
-                card.classList.add('hidden');
-            }
-        }
-    });
-
-    // Update count display
-    var countElement = document.getElementById('product-count');
-    if (countElement) {
-        countElement.textContent = visibleCount;
-    }
-}
-
-// Heart toggle function
-function toggleHeart(element) {
-    element.classList.toggle('active');
-}
-
-// Wishlist toggle function
-function toggleWishlist(button) {
-    button.classList.toggle('active');
-    var span = butt<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE></script>
