@@ -401,3 +401,16 @@ function toggleWishlist(button) {
     button.classList.toggle('active');
     var span = butt<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>
 
+// ONLY button active (NO FILTER)
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+// Heart
+function toggleHeart(el) {
+    el.classList.toggle('active');
+}
+</script>
