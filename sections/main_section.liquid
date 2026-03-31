@@ -232,7 +232,7 @@ body {
 <!-- ============================================
      PRODUCT LIST
      ============================================ -->
-<div class="cards-container">
+{% comment %} <div class="cards-container">
     {% for product in collections.all.products %}
         <div class="product-card" data-category="{{ product.collection.title }}">
             <div class="image-wrapper">
@@ -253,7 +253,7 @@ body {
             </div>
         </div>
     {% endfor %}
-</div> 
+</div>  {% endcomment %}
 
 <!-- ============================================
      FILTER SCRIPT
