@@ -193,7 +193,7 @@ body {
     {% if collections.size > 0 %}
         {% for collection in collections %}
             <div class="collection-card" 
-                 data-category="{{ collection.title }}"
+              data-category="{{ collection.handle }}"
                  style="background-image: url('{{ collection.image | image_url: width: 1200 }}');">
 
                 <div class="text">
