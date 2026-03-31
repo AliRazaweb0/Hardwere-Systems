@@ -397,85 +397,51 @@
             </div>
         </div>
 
-        <!-- Cards Container -->
-        <div class="cards-container">
-            
-            <!-- Card 1 -->
-            <div class="product-card">
-                <div class="image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=800&h=600&fit=crop" 
-                         alt="SmartLock Channel" class="card-image">
-                    
-                    <!-- Heart Icon Top Right -->
-                    <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                </div>
-                
-                <div class="card-content">
-                    <h3 class="card-title">SmartLock™ Channel</h3>
-                    <p class="card-description">Minimalist frameless glass panels with concealed channel fixings.</p>
-                    <a href="#" class="view-link">VIEW SYSTEM</a>
-                    
-                    <!-- Wishlist Button Bottom Left -->
-                    <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                        <i class="fas fa-bookmark"></i>
-                        <span>Wishlist</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="product-card">
-                <div class="image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=600&fit=crop" 
-                         alt="Semi-Frameless Balustrade" class="card-image">
-                    
-                    <!-- Heart Icon Top Right -->
-                    <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                </div>
-                
-                <div class="card-content">
-                    <h3 class="card-title">Semi-Frameless Balustrade</h3>
-                    <p class="card-description">Elegant semi-frameless system with slim post profiles.</p>
-                    <a href="#" class="view-link">VIEW SYSTEM</a>
-                    
-                    <!-- Wishlist Button Bottom Left -->
-                    <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                        <i class="fas fa-bookmark"></i>
-                        <span>Wishlist</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="product-card">
-                <div class="image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1572331165267-854da2b10ccc?w=800&h=600&fit=crop" 
-                         alt="Pool Fencing System" class="card-image">
-                    
-                    <!-- Heart Icon Top Right -->
-                    <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                        <i class="fas fa-heart"></i>
-                    </div>
-                </div>
-                
-                <div class="card-content">
-                    <h3 class="card-title">Pool Fencing System</h3>
-                    <p class="card-description">Compliant glass pool fencing with durable marine-grade hardware.</p>
-                    <a href="#" class="view-link">VIEW SYSTEM</a>
-                    
-                    <!-- Wishlist Button Bottom Left -->
-                    <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                        <i class="fas fa-bookmark"></i>
-                        <span>Wishlist</span>
-                    </button>
-                </div>
-            </div>
-
+        <div class="container">
+    <!-- Filter Buttons Section -->
+    <div class="filter-section">
+        <div class="filter-container">
+            <button class="filter-btn active">All Systems</button>
+            <button class="filter-btn">Balustrade & Pool</button>
+            <button class="filter-btn">Sliding Door</button>
+            <button class="filter-btn">Shower</button>
+            <button class="filter-btn">Canopy & Facade</button>
+            <button class="filter-btn">Commercial Doors & Partitions</button>
         </div>
+
+        <div class="section-header">
+            <p class="section-subtitle">{{ collections.all.products_count }} Systems Available</p>
+            <h1 class="section-title">Systems</h1>
+        </div>
+    </div>
+
+    <!-- Cards Container -->
+    <div class="cards-container">
+        {% for product in collections.all.products %}
+        <div class="product-card">
+            <div class="image-wrapper">
+                <img src="{{ product.featured_image | img_url: '800x600' }}" 
+                     alt="{{ product.title }}" class="card-image">
+
+                <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
+                    <i class="fas fa-heart"></i>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <h3 class="card-title">{{ product.title }}</h3>
+                <p class="card-description">{{ product.description | strip_html | truncate: 100 }}</p>
+                <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+
+                <button class="wishlist-btn" onclick="toggleWishlist(this)">
+                    <i class="fas fa-bookmark"></i>
+                    <span>Wishlist</span>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
     </div>
 
