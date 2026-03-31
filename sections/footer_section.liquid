@@ -356,79 +356,89 @@
 
         <div class="container">
     <!-- Filter Buttons Section -->
-    <div class="filter-section">
-      <div class="filter-container">
-    <a class="filter-btn active" href="/collections/all">All Systems</a>
-  <button class="filter-btn" data-category="Balustrade & Pool">Balustrade & Pool</button>
-    <a class="filter-btn" href="/collections/sliding-door">Sliding Door</a>
-    <a class="filter-btn" href="/collections/shower">Shower</a>
-    <a class="filter-btn" href="/collections/canopy-facade">Canopy & Facade</a>
-    <a class="filter-btn" href="/collections/commercial-doors-partitions">Commercial Doors & Partitions</a>
+    <!-- Filter Buttons Section -->
+<div class="filter-section">
+  <div class="filter-container">
+    <a class="filter-btn active" href="#" data-category="all">All Systems</a>
+    <button class="filter-btn" data-category="Balustrade & Pool">Balustrade & Pool</button>
+    <a class="filter-btn" href="#" data-category="Sliding Door">Sliding Door</a>
+    <a class="filter-btn" href="#" data-category="Shower">Shower</a>
+    <a class="filter-btn" href="#" data-category="Canopy & Facade">Canopy & Facade</a>
+    <a class="filter-btn" href="#" data-category="Commercial Doors & Partitions">Commercial Doors & Partitions</a>
+  </div>
+
+  <div class="section-header">
+      <p class="section-subtitle">{{ collections.all.products_count }} Systems Available</p>
+      <h1 class="section-title">Systems</h1>
+  </div>
 </div>
 
-        <div class="section-header">
-            <p class="section-subtitle">{{ collections.all.products_count }} Systems Available</p>
-            <h1 class="section-title">Systems</h1>
-        </div>
-    </div>
+<!-- Cards Container -->
+<div class="cards-container">
+    {% for product in collections.all.products %}
+   <div class="product-card" data-category="{{ product.collection.title }}">
+        <div class="image-wrapper">
+            <img src="{{ product.featured_image | img_url: '800x600' }}" 
+                 alt="{{ product.title }}" class="card-image">
 
-    <!-- Cards Container -->
-    <div class="cards-container">
-        {% for product in collections.all.products %}
-       <div class="product-card" data-category="{{ product.collection.title }}">
-            <div class="image-wrapper">
-                <img src="{{ product.featured_image | img_url: '800x600' }}" 
-                     alt="{{ product.title }}" class="card-image">
-
-                <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                    <i class="fas fa-heart"></i>
-                </div>
-            </div>
-
-            <div class="card-content">
-                <h3 class="card-title">{{ product.title }}</h3>
-                <p class="card-description">{{ product.description | strip_html | truncate: 100 }}</p>
-                <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-
-                <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                    <i class="fas fa-bookmark"></i>
-                    <span>Wishlist</span>
-                </button>
+            <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
+                <i class="fas fa-heart"></i>
             </div>
         </div>
-        {% endfor %}
+
+        <div class="card-content">
+            <h3 class="card-title">{{ product.title }}</h3>
+            <p class="card-description">{{ product.description | strip_html | truncate: 100 }}</p>
+            <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+
+            <button class="wishlist-btn" onclick="toggleWishlist(this)">
+                <i class="fas fa-bookmark"></i>
+                <span>Wishlist</span>
+            </button>
+        </div>
     </div>
+    {% endfor %}
 </div>
 
-    </div>
+<script>
+    // Heart toggle function
+    function toggleHeart(element) {
+        element.classList.toggle('active');
+        console.log(element.classList.contains('active') ? 'Liked!' : 'Unliked!');
+    }
 
-    <script>
-        // Heart toggle function
-        function toggleHeart(element) {
-            element.classList.toggle('active');
-            
-            if (element.classList.contains('active')) {
-                console.log('Liked!');
-            } else {
-                console.log('Unliked!');
-            }
-        }
+    // Wishlist toggle function
+    function toggleWishlist(element) {
+        element.classList.toggle('active');
+        const text = element.querySelector('span');
+        text.textContent = element.classList.contains('active') ? 'Saved' : 'Wishlist';
+        console.log(element.classList.contains('active') ? 'Added to wishlist!' : 'Removed from wishlist!');
+    }
 
-        // Wishlist toggle function
-        function toggleWishlist(element) {
-            element.classList.toggle('active');
-            const icon = element.querySelector('i');
-            const text = element.querySelector('span');
-            
-            if (element.classList.contains('active')) {
-                text.textContent = 'Saved';
-                console.log('Added to wishlist!');
-            } else {
-                text.textContent = 'Wishlist';
-                console.log('Removed from wishlist!');
-            }
-        }
-    </script>
+    // Filter Products
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-card');
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault(); // prevent link reload
+            const category = btn.dataset.category;
+
+            // Set active button
+            filterButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Filter product cards
+            productCards.forEach(card => {
+                if(category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 
 
   {% schema %}
