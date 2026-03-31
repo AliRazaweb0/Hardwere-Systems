@@ -405,6 +405,49 @@
         element.classList.toggle('active');
         console.log(element.classList.contains('active') ? 'Liked!' : 'Unliked!');
     }
+    const filterButtons = document.querySelectorAll('.filter-btn');
+const collectionCards = document.querySelectorAll('.collection-card');
+const productCards = document.querySelectorAll('.product-card');
+
+// Function to filter products and activate button
+function activateFilter(category) {
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+
+    const targetBtn = Array.from(filterButtons).find(btn => {
+        return (btn.dataset.category === category) || (btn.textContent.trim() === category);
+    });
+
+    if (targetBtn) targetBtn.classList.add('active');
+
+    productCards.forEach(card => {
+        if(category === 'all' || !category){
+            card.style.display = 'block';
+        } else {
+            card.style.display = (card.dataset.category === category) ? 'block' : 'none';
+        }
+    });
+}
+
+// Initial load: show all products and set "All Systems" active
+activateFilter('all');
+
+// Handle clicks on filter buttons
+filterButtons.forEach(btn => {
+    btn.addEventListener('click', e => {
+        e.preventDefault();
+        const category = btn.dataset.category || btn.textContent.trim();
+        activateFilter(category);
+    });
+});
+
+// Handle clicks on collection cards
+collectionCards.forEach(card => {
+    card.addEventListener('click', e => {
+        e.preventDefault();
+        const category = card.dataset.category;
+        activateFilter(category);
+    });
+});
 
     // Wishlist toggle function
     function toggleWishlist(element) {
