@@ -224,7 +224,7 @@ body {
    <div class="filter-container">
       <button class="filter-btn active" data-category="all">All Systems</button>
       {% for collection in collections %}
-         <button class="filter-btn" data-category="{{ collection.title }}">{{ collection.title }}</button>
+         <button class="filter-btn" data-category="{{ collection.handle }}">
       {% endfor %}
    </div>
 </div>
