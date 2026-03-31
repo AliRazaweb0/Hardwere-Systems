@@ -117,24 +117,17 @@
 
 /* Cards Container */
 .cards-container {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 10px;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);  /* 3 equal columns */
+    gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 15px;
 }
-
 .product-card {
-    flex: 1;
-    max-width: calc(32% - 8px);
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
+    display: flex;
+    flex-direction: column;  /* Vertical layout */
+    height: 100%;            /* Full height */
 }
 
 .product-card:hover {
@@ -181,8 +174,10 @@
 .heart-icon-top.active i { color: #fff; }
 
 .card-content {
-    padding: 18px;
-    padding-bottom: 55px;
+    flex: 1;               /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 70px;   /* Space for wishlist button */
     position: relative;
 }
 
