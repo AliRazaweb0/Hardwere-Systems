@@ -425,8 +425,23 @@ activateFilter('all');
 filterButtons.forEach(btn => {
     btn.addEventListener('click', e => {
         e.preventDefault();
-        const category = btn.dataset.category || btn.textContent.trim();
-        activateFilter(category);
+
+        const category = btn.dataset.category;
+
+        // Active button
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter products
+        productCards.forEach(card => {
+            const categories = card.dataset.category.split(',');
+
+            if(category === 'all' || categories.includes(category)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     });
 });
 
