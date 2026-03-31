@@ -186,30 +186,26 @@ body {
 </div>
 
 <!-- ============================================
-     MAIN CONTAINER - UNLIMITED COLLECTIONS
+     MAIN CONTAINER - COLLECTION CARDS
      ============================================ -->
 <div class="main-container">
 
     {% if collections.size > 0 %}
         {% for collection in collections %}
-            {% assign index = forloop.index %}
+            <div class="collection-card" 
+                 data-category="{{ collection.title }}"
+                 style="background-image: url('{{ collection.image | image_url: width: 1200 }}');">
 
-       <div class="collection-card" data-category="{{ collection.title }}">
-
-                <a href="{{ collection.url }}">
-                    <div class="text">
-                        <h3>{{ collection.title | escape }}</h3>
-                        {% if collection.description != blank %}
-                            <p>{{ collection.description | strip_html | truncate: 100 }}</p>
-                        {% endif %}
-                        <span>EXPLORE SYSTEMS →</span>
-                    </div>
-                </a>
+                <div class="text">
+                    <h3>{{ collection.title | escape }}</h3>
+                    {% if collection.description != blank %}
+                        <p>{{ collection.description | strip_html | truncate: 100 }}</p>
+                    {% endif %}
+                    <span>EXPLORE SYSTEMS →</span>
+                </div>
             </div>
-
         {% endfor %}
     {% else %}
-        <!-- Default placeholder if no collections exist -->
         <div class="collection-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
             <div class="text">
                 <h3>No Collections Found</h3>
@@ -221,34 +217,97 @@ body {
 
 </div>
 
-<!-- Filter Script -->
+<!-- ============================================
+     FILTER BUTTONS (IF ON SAME PAGE) - OPTIONAL
+     ============================================ -->
+<div class="filter-section">
+   <div class="filter-container">
+      <button class="filter-btn active" data-category="all">All Systems</button>
+      {% for collection in collections %}
+         <button class="filter-btn" data-category="{{ collection.title }}">{{ collection.title }}</button>
+      {% endfor %}
+   </div>
+</div>
+
+<!-- ============================================
+     PRODUCT LIST
+     ============================================ -->
+<div class="cards-container">
+    {% for product in collections.all.products %}
+        <div class="product-card" data-category="{{ product.collection.title }}">
+            <div class="image-wrapper">
+                <img src="{{ product.featured_image | img_url: '800x600' }}" 
+                     alt="{{ product.title }}" class="card-image">
+                <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
+                    <i class="fas fa-heart"></i>
+                </div>
+            </div>
+            <div class="card-content">
+                <h3 class="card-title">{{ product.title }}</h3>
+                <p class="card-description">{{ product.description | strip_html | truncate: 100 }}</p>
+                <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+                <button class="wishlist-btn" onclick="toggleWishlist(this)">
+                    <i class="fas fa-bookmark"></i>
+                    <span>Wishlist</span>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- ============================================
+     FILTER SCRIPT
+     ============================================ -->
 <script>
 const filterButtons = document.querySelectorAll('.filter-btn');
 const collectionCards = document.querySelectorAll('.collection-card');
+const productCards = document.querySelectorAll('.product-card');
 
+// Button click - filter products
 filterButtons.forEach(button => {
     button.addEventListener('click', (e) => {
-        e.preventDefault(); // ✅ Prevent page reload
+        e.preventDefault(); // Prevent page reload
+        const category = button.dataset.category;
 
-        // Remove active class from all buttons
+        // Activate button
         filterButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
 
-        const category = button.dataset.category;
-
-        collectionCards.forEach(card => {
-            if(category === 'all') {
-                card.style.display = 'block';
+        // Filter product cards
+        productCards.forEach(prod => {
+            if(category === 'all' || prod.dataset.category === category) {
+                prod.style.display = 'flex';
             } else {
-                if(card.dataset.category === category){
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
+                prod.style.display = 'none';
             }
         });
     });
 });
+
+// Collection card click - trigger matching button
+collectionCards.forEach(card => {
+    card.addEventListener('click', () => {
+        const category = card.dataset.category;
+
+        filterButtons.forEach(btn => {
+            if(btn.dataset.category === category) {
+                btn.click(); // simulate button click
+            }
+        });
+    });
+});
+
+// Heart toggle function
+function toggleHeart(element) {
+    element.classList.toggle('active');
+}
+
+// Wishlist toggle function
+function toggleWishlist(element) {
+    element.classList.toggle('active');
+    const text = element.querySelector('span');
+    text.textContent = element.classList.contains('active') ? 'Saved' : 'Wishlist';
+}
 </script>
 {% schema %}
 {
