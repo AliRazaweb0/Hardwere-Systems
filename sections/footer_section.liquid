@@ -375,7 +375,7 @@
     <!-- Cards Container -->
     <div class="cards-container">
         {% for product in collections.all.products %}
-        <div class="product-card">
+       <div class="product-card" data-category="{{ product.collection.title }}">
             <div class="image-wrapper">
                 <img src="{{ product.featured_image | img_url: '800x600' }}" 
                      alt="{{ product.title }}" class="card-image">
