@@ -400,6 +400,52 @@
 </div>
 
 <script>
+
+<!-- ============================================
+     FILTER SCRIPT
+     ============================================ -->
+<script>
+const filterButtons = document.querySelectorAll('.filter-btn');
+const collectionCards = document.querySelectorAll('.collection-card');
+
+collectionCards.forEach(card => {
+    card.addEventListener('click', e => {
+        e.preventDefault(); // prevent default link behavior
+
+        const category = card.dataset.category;
+
+        // Find the corresponding filter button
+        const targetBtn = Array.from(filterButtons).find(btn => btn.dataset.category === category);
+        if(targetBtn) {
+            targetBtn.click(); // triggers the filter logic and sets active class
+        }
+    });
+});
+const productCards = document.querySelectorAll('.product-card');
+
+// Button click - filter products
+filterButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent page reload
+        const category = button.dataset.category;
+
+        // Activate button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        // Filter product cards
+        productCards.forEach(prod => {
+            if(category === 'all' || prod.dataset.category === category) {
+                prod.style.display = 'flex';
+            } else {
+                prod.style.display = 'none';
+            }
+        });
+    });
+});
+
+
+
     // Heart toggle function
     function toggleHeart(element) {
         element.classList.toggle('active');
