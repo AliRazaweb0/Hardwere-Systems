@@ -399,3 +399,24 @@ function toggleHeart(element) {
 function toggleWishlist(button) {
     button.classList.toggle('active');
     var span = butt<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>
+    <script>
+
+// ONLY button active change
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+    });
+});
+
+// Heart
+function toggleHeart(el) {
+    el.classList.toggle('active');
+}
+
+// Wishlist
+function toggleWishlist(btn) {
+    btn.classList.toggle('active');
+}
+
+</script>
