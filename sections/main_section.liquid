@@ -1,12 +1,16 @@
+<!-- ============================================
+     COMPLETE SOLUTION - COLLECTION FILTER WITH URL & COUNT
+     ============================================ -->
+
 <style>
 /* ============================================
-   TUMHARA CSS - FIRST FULL WIDTH, REST 2 PER ROW
+   CSS - COLLECTION CARDS LAYOUT
    ============================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 body {
@@ -32,7 +36,7 @@ body {
 }
 
 /* ============================================
-   MAIN CONTAINER - 2 COLUMN GRID BASE
+   MAIN CONTAINER - 2 COLUMN GRID
    ============================================ */
 .main-container {
     display: grid;
@@ -41,9 +45,7 @@ body {
     padding: 40px;
 }
 
-/* ============================================
-   FIRST COLLECTION - FULL WIDTH (SPAN 2)
-   ============================================ */
+/* First card full width */
 .main-container > div:first-child {
     grid-column: span 2;
     height: 450px;
@@ -53,13 +55,11 @@ body {
     color: #fff;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     transition: transform 0.4s ease;
+    cursor: pointer;
 }
 
-/* ============================================
-   BAQI SAB COLLECTIONS - 2 PER ROW (SPAN 1)
-   ============================================ */
+/* Rest cards 2 per row */
 .main-container > div:not(:first-child) {
     grid-column: span 1;
     height: 275px;
@@ -69,11 +69,11 @@ body {
     color: #fff;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
     transition: transform 0.4s ease;
+    cursor: pointer;
 }
 
-/* Gradient overlay - sab cards pe same */
+/* Gradient overlay */
 .main-container > div::before {
     content: "";
     position: absolute;
@@ -82,7 +82,7 @@ body {
     z-index: 1;
 }
 
-/* Text styling - sab cards pe same */
+/* Text styling */
 .text {
     position: absolute;
     bottom: 25px;
@@ -114,65 +114,198 @@ body {
     letter-spacing: 1px;
 }
 
-/* Hover effect - sab pe same */
+/* Hover effect */
 .main-container > div:hover {
     transform: scale(1.04);
-    cursor: pointer;
-}
-
-/* Link styling - pura card clickable */
-.main-container > div > a {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    text-decoration: none;
-    color: inherit;
 }
 
 /* ============================================
-   RESPONSIVE - TABLET (SAME LAYOUT)
+   FILTER SECTION WITH COUNT
+   ============================================ */
+.filter-section {
+    padding: 20px 40px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid #ddd;
+    background: #fff;
+    color: #666;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+}
+
+.filter-btn:hover {
+    border-color: #667eea;
+    color: #667eea;
+}
+
+.filter-btn.active {
+    background: #667eea;
+    color: #fff;
+    border-color: #667eea;
+}
+
+/* Product count display */
+.product-count {
+    margin-left: auto;
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+.product-count span {
+    color: #667eea;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* ============================================
+   PRODUCTS GRID
+   ============================================ */
+.products-container {
+    padding: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-card.hidden {
+    display: none;
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #f0f0f0;
+}
+
+.product-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 8px;
+    line-height: 1.3;
+}
+
+.product-category {
+    font-size: 12px;
+    color: #667eea;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #222;
+    margin-top: auto;
+}
+
+/* No products message */
+.no-products {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #888;
+}
+
+.no-products h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #666;
+}
+
+/* ============================================
+   RESPONSIVE
    ============================================ */
 @media (max-width: 1024px) {
     .main-container {
         gap: 15px;
         padding: 30px;
     }
-
     .main-container > div:first-child {
         height: 350px;
     }
-
     .main-container > div:not(:first-child) {
         height: 220px;
     }
+    .products-container {
+        padding: 30px;
+        gap: 20px;
+    }
 }
 
-/* ============================================
-   RESPONSIVE - MOBILE (1 COLUMN)
-   ============================================ */
 @media (max-width: 768px) {
     .main-container {
         grid-template-columns: 1fr;
         padding: 20px;
-        gap: 15px;
     }
-
-    .main-container > div:first-child {
-        grid-column: span 1;
-        height: 300px;
-    }
-
+    .main-container > div:first-child,
     .main-container > div:not(:first-child) {
         grid-column: span 1;
         height: 250px;
     }
-
-    .header {
-        padding: 20px 20px 0 20px;
+    .filter-section {
+        padding: 15px 20px;
     }
-
-    .header h1 {
-        font-size: 24px;
+    .filter-container {
+        gap: 10px;
+    }
+    .filter-btn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
+    .product-count {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .products-container {
+        padding: 20px;
+        grid-template-columns: 1fr;
     }
 }
 </style>
@@ -186,15 +319,16 @@ body {
 </div>
 
 <!-- ============================================
-     MAIN CONTAINER - COLLECTION CARDS
+     COLLECTION CARDS
      ============================================ -->
 <div class="main-container">
-
     {% if collections.size > 0 %}
         {% for collection in collections %}
             <div class="collection-card" 
-                 data-category="{{ collection.title }}"
-                 style="background-image: url('{{ collection.image | image_url: width: 1200 }}');">
+                 data-category="{{ collection.title | handleize }}"
+                 data-collection-name="{{ collection.title | escape }}"
+                 style="background-image: url('{{ collection.image | image_url: width: 1200 }}');"
+                 onclick="filterByCollection('{{ collection.title | handleize }}')">
 
                 <div class="text">
                     <h3>{{ collection.title | escape }}</h3>
@@ -210,125 +344,64 @@ body {
             <div class="text">
                 <h3>No Collections Found</h3>
                 <p>Please create collections in your Shopify admin</p>
-                <span>GO TO PRODUCTS → COLLECTIONS</span>
             </div>
         </div>
     {% endif %}
-
 </div>
 
 <!-- ============================================
-     FILTER BUTTONS (IF ON SAME PAGE) - OPTIONAL
+     FILTER BUTTONS WITH COUNT
      ============================================ -->
 <div class="filter-section">
    <div class="filter-container">
-      <button class="filter-btn active" data-category="all">All Systems</button>
+      <button class="filter-btn active" data-category="all" onclick="filterProducts('all')">All Systems</button>
       {% for collection in collections %}
-         <button class="filter-btn" data-category="{{ collection.title }}">{{ collection.title }}</button>
+         <button class="filter-btn" data-category="{{ collection.title | handleize }}" onclick="filterProducts('{{ collection.title | handleize }}')">
+            {{ collection.title }}
+         </button>
       {% endfor %}
+
+      <!-- Product Count Display -->
+      <div class="product-count">
+         Showing <span id="product-count-number">0</span> products
+      </div>
    </div>
 </div>
 
-
 <!-- ============================================
-     FILTER SCRIPT
+     PRODUCTS CONTAINER
      ============================================ -->
-<script>
-const filterButtons = document.querySelectorAll('.filter-btn');
-const collectionCards = document.querySelectorAll('.collection-card');
+<div class="products-container" id="products-container">
+    {% for product in collections.all.products %}
+        <div class="product-card" 
+             data-category="{% for collection in product.collections %}{{ collection.title | handleize }}{% unless forloop.last %},{% endunless %}{% endfor %}"
+             data-product-id="{{ product.id }}">
 
-collectionCards.forEach(card => {
-    card.addEventListener('click', e => {
-        e.preventDefault(); // prevent default link behavior
+            {% if product.featured_image %}
+                <img src="{{ product.featured_image | image_url: width: 400 }}" 
+                     alt="{{ product.title | escape }}" 
+                     class="product-image">
+            {% else %}
+                <div class="product-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+            {% endif %}
 
-        const category = card.dataset.category;
+            <div class="product-info">
+                <div class="product-category">
+                    {% for collection in product.collections limit: 1 %}
+                        {{ collection.title }}
+                    {% endfor %}
+                </div>
+                <h3 class="product-title">{{ product.title | escape }}</h3>
+                <div class="product-price">{{ product.price | money }}</div>
+            </div>
+        </div>
+    {% endfor %}
 
-        // Find the corresponding filter button
-        const targetBtn = Array.from(filterButtons).find(btn => btn.dataset.category === category);
-        if(targetBtn) {
-            targetBtn.click(); // triggers the filter logic and sets active class
-        }
-    });
-});
-const productCards = document.querySelectorAll('.product-card');
+    <!-- No Products Message (Hidden by default) -->
+    <div class="no-products" id="no-products-msg" style="display: none;">
+        <h3>No products found</h3>
+        <p>Try selecting a different category</p>
+    </div>
+</div>
 
-// Button click - filter products
-filterButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent page reload
-        const category = button.dataset.category;
-
-        // Activate button
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-
-        // Filter product cards
-        productCards.forEach(prod => {
-            if(category === 'all' || prod.dataset.category === category) {
-                prod.style.display = 'flex';
-            } else {
-                prod.style.display = 'none';
-            }
-        });
-    });
-});
-
-// Collection card click - trigger matching button
-collectionCards.forEach(card => {
-    card.addEventListener('click', () => {
-        const category = card.dataset.category;
-
-        filterButtons.forEach(btn => {
-            if(btn.dataset.category === category) {
-                btn.click(); // simulate button click
-            }
-        });
-    });
-});
-
-// Heart toggle function
-function toggleHeart(element) {
-    element.classList.toggle('active');
-}
-
-// Wishlist toggle function
-function toggleWishlist(element) {
-    element.classList.toggle('active');
-    const text = element.querySelector('span');
-    text.textContent = element.classList.contains('active') ? 'Saved' : 'Wishlist';
-}
-</script>
-{% schema %}
-{
-  "name": "System Categories",
-  "tag": "section",
-  "class": "system-categories-section",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Section Header"
-    },
-    {
-      "type": "text",
-      "id": "subtitle",
-      "label": "Subtitle",
-      "default": "BROWSE BY CATEGORY"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "System Categories"
-    }
-  ],
-  "presets": [
-    {
-      "name": "System Categories",
-      "settings": {
-        "subtitle": "BROWSE BY CATEGORY",
-        "title": "System Categories"
-      }
-    }
-  ]
-}
-{% endschema %}
+<!-- =============================<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>
