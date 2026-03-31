@@ -74,151 +74,123 @@
             margin-bottom: 30px; /* Space before cards */
         }
 
-        /* Cards Container */
-        .cards-container {
-            display: flex;
-            gap: 24px;
-        }
+/* Container for cards */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap; /* allow multiple rows */
+    gap: 20px;       /* gap between cards */
+    justify-content: space-between; /* distribute cards evenly */
+}
 
-        .product-card {
-            flex: 1;
-            background-color: #ffffff;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            position: relative;
-        }
+/* Each card takes roughly 1/3 width */
+.product-card {
+    width: calc(33.333% - 13.33px); /* subtracting a bit for gaps */
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+}
 
-        /* Image Zoom Out on Hover */
-        .image-wrapper {
-            overflow: hidden;
-            position: relative;
-        }
+.product-card:hover {
+    transform: translateY(-5px);
+}
 
-        .card-image {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.5s ease;
-        }
+/* Image wrapper */
+.image-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
 
-        .product-card:hover .card-image {
-            transform: scale(0.95);
-        }
+.card-image {
+    width: 100%;
+    height: 220px; /* fixed height for uniformity */
+    object-fit: cover;
+    display: block;
+}
 
-        /* Heart Icon - Top Right Corner */
-        .heart-icon-top {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 36px;
-            height: 36px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            z-index: 10;
-        }
+/* Heart icon */
+.heart-icon-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
 
-        .heart-icon-top i {
-            font-size: 16px;
-            color: #070000;
-            transition: all 0.3s ease;
-        }
+.heart-icon-top:hover {
+    transform: scale(1.2);
+}
 
-        /* Heart Hover - Pink */
-        .heart-icon-top:hover {
-            background-color: #ffffff;
-            transform: scale(1.1);
-        }
+/* Card content */
+.card-content {
+    padding: 15px;
+    flex-grow: 1; /* make content take remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
 
-        .heart-icon-top:hover i {
-            color: #ff6b9d;
-        }
+.card-title {
+    font-size: 18px;
+    margin: 0 0 8px;
+    font-weight: 600;
+}
 
-        /* Heart Active - Red */
-        .heart-icon-top.active {
-            background-color: #e74c3c;
-        }
+.card-description {
+    font-size: 14px;
+    color: #555;
+    flex-grow: 1;
+}
 
-        .heart-icon-top.active i {
-            color: #ffffff;
-        }
+.view-link {
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
 
-        .heart-icon-top.active:hover {
-            background-color: #c0392b;
-        }
+.view-link:hover {
+    text-decoration: underline;
+}
 
-        /* Card Content */
-        .card-content {
-            padding: 24px;
-            padding-bottom: 80px; /* Space for wishlist button */
-            position: relative;
-        }
+/* Wishlist button */
+.wishlist-btn {
+    margin-top: 10px;
+    background: #f8f8f8;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #333;
+}
 
-        .card-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 12px;
-            line-height: 1.3;
-            /* NO hover effect - static */
-        }
+.wishlist-btn i {
+    font-size: 16px;
+}
 
-        .card-description {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            /* NO hover effect - static */
-        }
+/* Responsive for smaller screens */
+@media (max-width: 992px) {
+    .product-card {
+        width: calc(50% - 10px); /* 2 cards per row */
+    }
+}
 
-        /* Static View Link */
-        .view-link {
-            font-size: 13px;
-            font-weight: 600;
-            color: #1a1a1a;
-            text-decoration: none;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .view-link::after {
-            content: '→';
-            font-size: 14px;
-        }
-
-        /* Wishlist Button - Bottom Left Sticky */
-        .wishlist-btn {
-            position: absolute;
-            bottom: 20px;
-            left: 24px;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 13px;
-            color: #666666;
-            font-weight: 500;
-        }
-
-        .wishlist-btn i {
-            font-size: 14px;
-        }
-
+@media (max-width: 600px) {
+    .product-card {
+        width: 100%; /* 1 card per row */
+    }
+}
         /* Wishlist Hover */
         .wishlist-btn:hover {
             background-color: #fff5f5;
