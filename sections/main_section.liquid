@@ -193,7 +193,7 @@ body {
     {% if collections.size > 0 %}
         {% for collection in collections %}
             <div class="collection-card" 
-              data-category="{{ collection.handle }}"
+                 data-category="{{ collection.title }}"
                  style="background-image: url('{{ collection.image | image_url: width: 1200 }}');">
 
                 <div class="text">
@@ -224,7 +224,7 @@ body {
    <div class="filter-container">
       <button class="filter-btn active" data-category="all">All Systems</button>
       {% for collection in collections %}
-         <button class="filter-btn" data-category="{{ collection.handle }}">
+         <button class="filter-btn" data-category="{{ collection.title }}">{{ collection.title }}</button>
       {% endfor %}
    </div>
 </div>
