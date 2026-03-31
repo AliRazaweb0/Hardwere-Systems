@@ -116,19 +116,19 @@
 }
 
 /* Cards Container */
-.cards-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);  /* 3 equal columns */
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-}
-.product-card {
-    display: flex;
-    flex-direction: column;  /* Vertical layout */
-    height: 100%;            /* Full height */
-}
+  .cards-container {
+            display: flex;
+            gap: 16px;
+        }
+
+        .product-card {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
 
 .product-card:hover {
     transform: translateY(-3px);
