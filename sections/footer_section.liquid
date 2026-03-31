@@ -1,8 +1,8 @@
-<!-- Font Awesome (Icons FIX) -->
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- =========================
-   FILTER SECTION (REDIRECT)
+   FILTER SECTION (ONLY LINKS)
 ========================= -->
 <div class="filter-section">
     <div class="filter-container">
@@ -28,7 +28,7 @@
 </div>
 
 <!-- =========================
-   PRODUCT CARDS
+   PRODUCT CARDS (NO FILTER)
 ========================= -->
 <div class="cards-container">
     {% for product in collections.all.products %}
@@ -38,8 +38,8 @@
                 <img src="{{ product.featured_image | img_url: '600x400' }}" 
                      alt="{{ product.title }}" class="card-image">
 
-                <!-- Heart -->
-                <div class="heart-icon-top" onclick="toggleHeart(this)">
+                <!-- Heart Icon -->
+                <div class="heart-icon-top" onclick="this.classList.toggle('active')">
                     <i class="fa-solid fa-heart"></i>
                 </div>
             </div>
@@ -53,7 +53,7 @@
 
                 <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
 
-                <button class="wishlist-btn" onclick="toggleWishlist(this)">
+                <button class="wishlist-btn" onclick="this.classList.toggle('active')">
                     <i class="fa-solid fa-bookmark"></i>
                     <span>Wishlist</span>
                 </button>
@@ -64,15 +64,14 @@
 </div>
 
 <!-- =========================
-   CSS
+   CSS (CLEAN + SAME DESIGN)
 ========================= -->
 <style>
 
-/* Layout */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px; /* reduced gap */
+    gap: 12px;
     max-width: 1100px;
     margin: auto;
     padding: 0 10px;
@@ -88,7 +87,6 @@
 
 .product-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
 }
 
 /* Image */
@@ -103,7 +101,7 @@
     object-fit: cover;
 }
 
-/* Heart Icon */
+/* Heart */
 .heart-icon-top {
     position: absolute;
     top: 10px;
@@ -117,10 +115,6 @@
     align-items: center;
     cursor: pointer;
     z-index: 999;
-}
-
-.heart-icon-top i {
-    color: #555;
 }
 
 .heart-icon-top.active {
@@ -140,7 +134,6 @@
 
 .card-title {
     font-size: 16px;
-    font-weight: 600;
     margin-bottom: 8px;
 }
 
@@ -150,15 +143,13 @@
     margin-bottom: 10px;
 }
 
-/* View Button */
+/* Button */
 .view-link {
-    display: inline-block;
     background: #000;
     color: #fff;
     padding: 7px 14px;
     font-size: 12px;
     text-decoration: none;
-    border-radius: 4px;
 }
 
 .view-link:hover {
@@ -175,7 +166,6 @@
     border: 1px solid #ddd;
     background: #fff;
     cursor: pointer;
-    font-size: 12px;
 }
 
 .wishlist-btn.active {
@@ -211,31 +201,16 @@
 }
 
 /* Responsive */
-@media(max-width: 768px){
+@media(max-width:768px){
     .cards-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 }
 
-@media(max-width: 480px){
+@media(max-width:480px){
     .cards-container {
         grid-template-columns: 1fr;
     }
 }
 
 </style>
-
-<!-- =========================
-   JS
-========================= -->
-<script>
-
-function toggleHeart(el) {
-    el.classList.toggle("active");
-}
-
-function toggleWishlist(btn) {
-    btn.classList.toggle("active");
-}
-
-</script>
