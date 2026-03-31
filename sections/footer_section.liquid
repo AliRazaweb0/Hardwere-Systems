@@ -2,61 +2,58 @@
 <div class="filter-section">
     <div class="filter-container">
         <!-- All Systems Button (Static) -->
-        <button class="filter-btn active" data-filter="all" onclick="filterProducts('all')">All Systems</button>
+        <a href="/collections/all" class="filter-btn {% if collection.handle == 'all' or collection.handle == blank %}active{% endif %}">All Systems</a>
 
-        <!-- Dynamic Collection Buttons -->
-        {% for collection in collections %}
-            {% if collection.handle != 'all' and collection.products_count > 0 %}
-                <button class="filter-btn" data-filter="{{ collection.handle }}" onclick="filterProducts('{{ collection.handle }}')">
-                    {{ collection.title }}
-                </button>
+        <!-- Dynamic Collection Buttons - Link to Collection Pages -->
+        {% for col in collections %}
+            {% if col.handle != 'all' and col.products_count > 0 %}
+                <a href="/collections/{{ col.handle }}" 
+                   class="filter-btn {% if collection.handle == col.handle %}active{% endif %}">
+                    {{ col.title }}
+                </a>
             {% endif %}
         {% endfor %}
     </div>
 
     <!-- Section Header -->
     <div class="section-header">
-        <p class="section-subtitle"><span id="product-count">0</span> Systems Available</p>
-        <h1 class="section-title">Systems</h1>
+        <p class="section-subtitle">{{ collection.products_count }} Systems Available</p>
+        <h1 class="section-title">{{ collection.title | default: 'Systems' }}</h1>
     </div>
 </div>
 
-<!-- Cards Container -->
+<!-- Cards Container - Products from Current Collection -->
 <div class="cards-container" id="products-container">
-    {% for collection in collections %}
-        {% if collection.handle != 'all' %}
-            {% for product in collection.products %}
-                <div class="product-card" data-collection="{{ collection.handle }}" data-all="true">
-                    <div class="image-wrapper">
-                        <img src="{{ product.featured_image | img_url: '600x400' }}" 
-                             alt="{{ product.title }}" class="card-image" 
-                             onerror="this.style.display='none'">
+    {% for product in collection.products %}
+        <div class="product-card">
+            <div class="image-wrapper">
+                <img src="{{ product.featured_image | img_url: '600x400' }}" 
+                     alt="{{ product.title }}" class="card-image" 
+                     onerror="this.style.display='none'">
 
-                        <!-- Heart Icon Top Right -->
-                        <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                    </div>
-
-                    <div class="card-content">
-                        <!-- Product Title -->
-                        <h3 class="card-title">{{ product.title }}</h3>
-
-                        <!-- Product Description -->
-                        <p class="card-description">{{ product.description | strip_html | truncate: 80 }}</p>
-
-                        <!-- View System Button -->
-                        <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-
-                        <!-- Wishlist Button -->
-                        <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                            <i class="fas fa-bookmark"></i>
-                            <span>Wishlist</span>
-                        </button>
-                    </div>
+                <!-- Heart Icon Top Right -->
+                <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
+                    <i class="fas fa-heart"></i>
                 </div>
-            {% endfor %}
-        {% endif %}
+            </div>
+
+            <div class="card-content">
+                <!-- Product Title -->
+                <h3 class="card-title">{{ product.title }}</h3>
+
+                <!-- Product Description -->
+                <p class="card-description">{{ product.description | strip_html | truncate: 80 }}</p>
+
+                <!-- View System Button -->
+                <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+
+                <!-- Wishlist Button -->
+                <button class="wishlist-btn" onclick="toggleWishlist(this)">
+                    <i class="fas fa-bookmark"></i>
+                    <span>Wishlist</span>
+                </button>
+            </div>
+        </div>
     {% endfor %}
 </div>
 
@@ -78,6 +75,7 @@
 }
 
 .filter-btn {
+    display: inline-block;
     padding: 12px 24px;
     background-color: #ffffff;
     border: 2px solid #e0e0e0;
@@ -85,6 +83,7 @@
     font-size: 13px;
     font-weight: 600;
     color: #555;
+    text-decoration: none;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
@@ -170,10 +169,6 @@
 .product-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-}
-
-.product-card.hidden {
-    display: none !important;
 }
 
 .image-wrapper {
@@ -338,58 +333,6 @@
 </style>
 
 <script>
-// Product Count and Filter Function
-document.addEventListener('DOMContentLoaded', function() {
-    updateProductCount();
-    // Show all products by default
-    filterProducts('all');
-});
-
-function updateProductCount() {
-    var productCards = document.querySelectorAll('.product-card:not(.hidden)');
-    var totalProducts = productCards.length;
-    var countElement = document.getElementById('product-count');
-    if (countElement) {
-        countElement.textContent = totalProducts;
-    }
-}
-
-function filterProducts(collectionHandle) {
-    var productCards = document.querySelectorAll('.product-card');
-    var filterButtons = document.querySelectorAll('.filter-btn');
-    var visibleCount = 0;
-
-    // Update active button state
-    filterButtons.forEach(function(btn) {
-        btn.classList.remove('active');
-        if (btn.getAttribute('data-filter') === collectionHandle) {
-            btn.classList.add('active');
-        }
-    });
-
-    // Filter products
-    productCards.forEach(function(card) {
-        if (collectionHandle === 'all') {
-            card.classList.remove('hidden');
-            visibleCount++;
-        } else {
-            var cardCollection = card.getAttribute('data-collection');
-            if (cardCollection === collectionHandle) {
-                card.classList.remove('hidden');
-                visibleCount++;
-            } else {
-                card.classList.add('hidden');
-            }
-        }
-    });
-
-    // Update count display
-    var countElement = document.getElementById('product-count');
-    if (countElement) {
-        countElement.textContent = visibleCount;
-    }
-}
-
 // Heart toggle function
 function toggleHeart(element) {
     element.classList.toggle('active');
@@ -398,4 +341,11 @@ function toggleHeart(element) {
 // Wishlist toggle function
 function toggleWishlist(button) {
     button.classList.toggle('active');
-    var span = butt<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>
+    var span = button.querySelector('span');
+    if (button.classList.contains('active')) {
+        span.textContent = 'Added';
+    } else {
+        span.textContent = 'Wishlist';
+    }
+}
+</script>
