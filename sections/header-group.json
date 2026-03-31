@@ -92,18 +92,15 @@
     "main_section_rqeQHf": {
       "type": "main_section",
       "name": "Mainsection",
-      "settings": {}
-    },
-    "footer_section_AjVHVG": {
-      "type": "footer_section",
-      "name": "Footer_sectrion",
-      "settings": {}
+      "settings": {
+        "subtitle": "BROWSE BY CATEGORY",
+        "title": "System Categories"
+      }
     }
   },
   "order": [
     "header_section",
     "header_first_section_MXFRyj",
-    "main_section_rqeQHf",
-    "footer_section_AjVHVG"
+    "main_section_rqeQHf"
   ]
 }
