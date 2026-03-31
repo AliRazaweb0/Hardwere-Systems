@@ -413,7 +413,7 @@ function activateFilter(category) {
         if(category === 'all' || !category){
             card.style.display = 'block';
         } else {
-            card.style.display = (card.dataset.category === category) ? 'block' : 'none';
+            card.style.display = (card.dataset.category.split(',').includes(category)) ? 'block' : 'none';
         }
     });
 }
