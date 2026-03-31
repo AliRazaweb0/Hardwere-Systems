@@ -1,59 +1,60 @@
 <!-- Filter Section -->
 <div class="filter-section">
     <div class="filter-container">
-        <!-- All Systems Button (Static) -->
-        <button class="filter-btn active" data-filter="all" onclick="filterProducts('all')">All Systems</button>
+        
+        <!-- All Systems Button -->
+        <button class="filter-btn active">All Systems</button>
 
         <!-- Dynamic Collection Buttons -->
         {% for collection in collections %}
             {% if collection.handle != 'all' and collection.products_count > 0 %}
-                <button class="filter-btn" data-filter="{{ collection.handle }}" onclick="filterProducts('{{ collection.handle }}')">
+                <button class="filter-btn">
                     {{ collection.title }}
                 </button>
             {% endif %}
         {% endfor %}
+        
     </div>
 
     <!-- Section Header -->
     <div class="section-header">
-        <p class="section-subtitle"><span id="product-count">0</span> Systems Available</p>
+        <p class="section-subtitle">{{ collections.all.products_count }} Systems Available</p>
         <h1 class="section-title">Systems</h1>
     </div>
 </div>
 
 <!-- Cards Container -->
-<div class="cards-container" id="products-container">
+<div class="cards-container">
     {% for collection in collections %}
         {% if collection.handle != 'all' %}
             {% for product in collection.products %}
-                <div class="product-card" data-collection="{{ collection.handle }}" data-all="true">
+                <div class="product-card">
+
                     <div class="image-wrapper">
                         <img src="{{ product.featured_image | img_url: '600x400' }}" 
-                             alt="{{ product.title }}" class="card-image" 
-                             onerror="this.style.display='none'">
+                             alt="{{ product.title }}" class="card-image">
 
-                        <!-- Heart Icon Top Right -->
-                        <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
+                        <!-- Heart Icon -->
+                        <div class="heart-icon-top" onclick="toggleHeart(this)">
                             <i class="fas fa-heart"></i>
                         </div>
                     </div>
 
                     <div class="card-content">
-                        <!-- Product Title -->
                         <h3 class="card-title">{{ product.title }}</h3>
 
-                        <!-- Product Description -->
-                        <p class="card-description">{{ product.description | strip_html | truncate: 80 }}</p>
+                        <p class="card-description">
+                            {{ product.description | strip_html | truncate: 80 }}
+                        </p>
 
-                        <!-- View System Button -->
                         <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
 
-                        <!-- Wishlist Button -->
                         <button class="wishlist-btn" onclick="toggleWishlist(this)">
                             <i class="fas fa-bookmark"></i>
                             <span>Wishlist</span>
                         </button>
                     </div>
+
                 </div>
             {% endfor %}
         {% endif %}
@@ -399,24 +400,4 @@ function toggleHeart(element) {
 function toggleWishlist(button) {
     button.classList.toggle('active');
     var span = butt<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>
-    <script>
 
-// ONLY button active change
-document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function () {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-    });
-});
-
-// Heart
-function toggleHeart(el) {
-    el.classList.toggle('active');
-}
-
-// Wishlist
-function toggleWishlist(btn) {
-    btn.classList.toggle('active');
-}
-
-</script>
