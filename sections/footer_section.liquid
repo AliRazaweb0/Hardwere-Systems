@@ -355,17 +355,17 @@
 
 
         <div class="container">
-     <!-- Filter Buttons Section -->
- <div class="filter-section">
-  <div class="filter-container">
-    <a class="filter-btn active" href="#" data-category="all">All Systems</a>
-    <button class="filter-btn" data-category="Balustrade & Pool">Balustrade & Pool</button>
-    <a class="filter-btn" href="#" data-category="Sliding Door">Sliding Door</a>
-    <a class="filter-btn" href="#" data-category="Shower">Shower</a>
-    <a class="filter-btn" href="#" data-category="Canopy & Facade">Canopy & Facade</a>
-    <a class="filter-btn" href="#" data-category="Commercial Doors & Partitions">Commercial Doors & Partitions</a>
-  </div> 
-
+<!-- ============================================
+     FILTER BUTTONS (IF ON SAME PAGE) - OPTIONAL
+     ============================================ -->
+<div class="filter-section">
+   <div class="filter-container">
+      <button class="filter-btn active" data-category="all">All Systems</button>
+      {% for collection in collections %}
+         <button class="filter-btn" data-category="{{ collection.title }}">{{ collection.title }}</button>
+      {% endfor %}
+   </div>
+</div>
   <div class="section-header">
       <p class="section-subtitle">{{ collections.all.products_count }} Systems Available</p>
       <h1 class="section-title">Systems</h1>

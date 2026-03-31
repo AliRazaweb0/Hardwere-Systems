@@ -216,44 +216,6 @@ body {
     {% endif %}
 
 </div>
-{% comment %} 
-<!-- ============================================
-     FILTER BUTTONS (IF ON SAME PAGE) - OPTIONAL
-     ============================================ -->
-<div class="filter-section">
-   <div class="filter-container">
-      <button class="filter-btn active" data-category="all">All Systems</button>
-      {% for collection in collections %}
-         <button class="filter-btn" data-category="{{ collection.title }}">{{ collection.title }}</button>
-      {% endfor %}
-   </div>
-</div>
-
-<!-- ============================================
-     PRODUCT LIST
-     ============================================ -->
-<div class="cards-container">
-    {% for product in collections.all.products %}
-        <div class="product-card" data-category="{{ product.collection.title }}">
-            <div class="image-wrapper">
-                <img src="{{ product.featured_image | img_url: '800x600' }}" 
-                     alt="{{ product.title }}" class="card-image">
-                <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
-                    <i class="fas fa-heart"></i>
-                </div>
-            </div>
-            <div class="card-content">
-                <h3 class="card-title">{{ product.title }}</h3>
-                <p class="card-description">{{ product.description | strip_html | truncate: 100 }}</p>
-                <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-                <button class="wishlist-btn" onclick="toggleWishlist(this)">
-                    <i class="fas fa-bookmark"></i>
-                    <span>Wishlist</span>
-                </button>
-            </div>
-        </div>
-    {% endfor %}
-</div> {% endcomment %}
 
 <!-- ============================================
      FILTER SCRIPT
