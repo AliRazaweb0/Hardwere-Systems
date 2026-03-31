@@ -1,216 +1,401 @@
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<!-- =========================
-   FILTER SECTION (ONLY LINKS)
-========================= -->
+<!-- Filter Section -->
 <div class="filter-section">
     <div class="filter-container">
+        <!-- All Systems Button (Static) -->
+        <button class="filter-btn active" data-filter="all" onclick="filterProducts('all')">All Systems</button>
 
-        <a href="/collections/all" class="filter-btn active">All Systems</a>
-
+        <!-- Dynamic Collection Buttons -->
         {% for collection in collections %}
             {% if collection.handle != 'all' and collection.products_count > 0 %}
-                <a href="{{ collection.url }}" class="filter-btn">
+                <button class="filter-btn" data-filter="{{ collection.handle }}" onclick="filterProducts('{{ collection.handle }}')">
                     {{ collection.title }}
-                </a>
+                </button>
             {% endif %}
         {% endfor %}
-
     </div>
 
+    <!-- Section Header -->
     <div class="section-header">
-        <p class="section-subtitle">
-            {{ collections.all.products_count }} Systems Available
-        </p>
+        <p class="section-subtitle"><span id="product-count">0</span> Systems Available</p>
         <h1 class="section-title">Systems</h1>
     </div>
 </div>
 
-<!-- =========================
-   PRODUCT CARDS (NO FILTER)
-========================= -->
-<div class="cards-container">
-    {% for product in collections.all.products %}
-        <div class="product-card">
+<!-- Cards Container -->
+<div class="cards-container" id="products-container">
+    {% for collection in collections %}
+        {% if collection.handle != 'all' %}
+            {% for product in collection.products %}
+                <div class="product-card" data-collection="{{ collection.handle }}" data-all="true">
+                    <div class="image-wrapper">
+                        <img src="{{ product.featured_image | img_url: '600x400' }}" 
+                             alt="{{ product.title }}" class="card-image" 
+                             onerror="this.style.display='none'">
 
-            <div class="image-wrapper">
-                <img src="{{ product.featured_image | img_url: '600x400' }}" 
-                     alt="{{ product.title }}" class="card-image">
+                        <!-- Heart Icon Top Right -->
+                        <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                    </div>
 
-                <!-- Heart Icon -->
-                <div class="heart-icon-top" onclick="this.classList.toggle('active')">
-                    <i class="fa-solid fa-heart"></i>
+                    <div class="card-content">
+                        <!-- Product Title -->
+                        <h3 class="card-title">{{ product.title }}</h3>
+
+                        <!-- Product Description -->
+                        <p class="card-description">{{ product.description | strip_html | truncate: 80 }}</p>
+
+                        <!-- View System Button -->
+                        <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+
+                        <!-- Wishlist Button -->
+                        <button class="wishlist-btn" onclick="toggleWishlist(this)">
+                            <i class="fas fa-bookmark"></i>
+                            <span>Wishlist</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="card-content">
-                <h3 class="card-title">{{ product.title }}</h3>
-
-                <p class="card-description">
-                    {{ product.description | strip_html | truncate: 80 }}
-                </p>
-
-                <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-
-                <button class="wishlist-btn" onclick="this.classList.toggle('active')">
-                    <i class="fa-solid fa-bookmark"></i>
-                    <span>Wishlist</span>
-                </button>
-            </div>
-
-        </div>
+            {% endfor %}
+        {% endif %}
     {% endfor %}
 </div>
 
-<!-- =========================
-   CSS (CLEAN + SAME DESIGN)
-========================= -->
 <style>
+/* Filter Section Styling */
+.filter-section {
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    padding: 0 15px;
+}
 
+/* Filter Buttons Row - Modern Pill Style */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+    justify-content: flex-start;
+}
+
+.filter-btn {
+    padding: 12px 24px;
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    white-space: nowrap;
+}
+
+.filter-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.filter-btn.active {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(26,26,26,0.3);
+}
+
+/* Section Header - Subtitle and Title */
+.section-header {
+    text-align: left;
+    margin-bottom: 10px;
+    padding-left: 5px;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 8px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.section-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: #ff6b9d;
+    border-radius: 2px;
+}
+
+/* Cards Container - Remove Empty Spaces */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    max-width: 1100px;
-    margin: auto;
-    padding: 0 10px;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .product-card {
-    background: #fff;
-    border-radius: 10px;
+    background-color: #fff;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    transition: 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .product-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
-/* Image */
+.product-card.hidden {
+    display: none !important;
+}
+
 .image-wrapper {
     position: relative;
-    height: 200px;
+    overflow: hidden;
+    height: 220px;
 }
 
 .card-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-/* Heart */
+.product-card:hover .card-image {
+    transform: scale(1.08);
+}
+
 .heart-icon-top {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 34px;
-    height: 34px;
-    background: #fff;
+    top: 12px;
+    right: 12px;
+    width: 38px;
+    height: 38px;
+    background-color: rgba(255,255,255,0.95);
     border-radius: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     cursor: pointer;
-    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s;
+    z-index: 20;
 }
 
-.heart-icon-top.active {
-    background: red;
-}
-
-.heart-icon-top.active i {
-    color: #fff;
-}
-
-/* Content */
-.card-content {
-    padding: 15px;
-    position: relative;
-    padding-bottom: 60px;
-}
-
-.card-title {
+.heart-icon-top i {
     font-size: 16px;
-    margin-bottom: 8px;
-}
-
-.card-description {
-    font-size: 13px;
     color: #666;
+    transition: all 0.3s;
+}
+
+.heart-icon-top:hover {
+    transform: scale(1.1);
+    background-color: #fff;
+}
+
+.heart-icon-top:hover i { color: #ff6b9d; }
+.heart-icon-top.active { background-color: #e74c3c; }
+.heart-icon-top.active i { color: #fff; }
+
+.card-content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 70px;
+}
+
+.card-title { 
+    font-size: 18px; 
+    font-weight: 700; 
+    color: #1a1a1a; 
     margin-bottom: 10px;
+    line-height: 1.3;
 }
 
-/* Button */
+.card-description { 
+    font-size: 14px; 
+    color: #666; 
+    line-height: 1.5; 
+    margin-bottom: 15px;
+    flex: 1;
+}
+
 .view-link {
-    background: #000;
-    color: #fff;
-    padding: 7px 14px;
-    font-size: 12px;
+    display: inline-block;
     text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #fff;
+    background-color: #1a1a1a;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: all 0.3s;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: 0.5px;
 }
 
-.view-link:hover {
-    background: #ff6b9d;
+.view-link:hover { 
+    background-color: #ff6b9d; 
+    transform: translateX(3px);
 }
 
-/* Wishlist */
 .wishlist-btn {
     position: absolute;
-    bottom: 10px;
-    left: 15px;
-    right: 15px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    background: #fff;
-    cursor: pointer;
-}
-
-.wishlist-btn.active {
-    background: red;
-    color: #fff;
-}
-
-/* Filter */
-.filter-container {
+    bottom: 18px;
+    left: 20px;
+    right: 20px;
     display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background-color: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 15;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.filter-btn {
-    padding: 8px 16px;
-    border: 1px solid #ddd;
-    text-decoration: none;
-    color: #333;
-    border-radius: 20px;
-    font-size: 12px;
+.wishlist-btn i { font-size: 14px; }
+
+.wishlist-btn:hover { 
+    background-color: #ff6b9d; 
+    border-color: #ff6b9d; 
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255,107,157,0.3);
 }
 
-.filter-btn:hover {
-    background: black;
+.wishlist-btn.active { 
+    background-color: #e74c3c; 
+    border-color: #e74c3c; 
     color: #fff;
 }
 
-.filter-btn.active {
-    background: black;
-    color: #fff;
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .cards-container { grid-template-columns: repeat(2, 1fr); }
+    .section-title { font-size: 36px; }
+    .filter-container { justify-content: center; }
 }
 
-/* Responsive */
-@media(max-width:768px){
-    .cards-container {
-        grid-template-columns: repeat(2,1fr);
+@media (max-width: 768px) {
+    .cards-container { grid-template-columns: 1fr; }
+    .section-title { font-size: 28px; }
+    .filter-btn { 
+        padding: 10px 18px; 
+        font-size: 12px;
+        letter-spacing: 0.5px;
     }
+    .filter-container { gap: 8px; }
 }
 
-@media(max-width:480px){
-    .cards-container {
-        grid-template-columns: 1fr;
+@media (max-width: 480px) {
+    .filter-btn { 
+        padding: 8px 14px; 
+        font-size: 11px;
     }
+    .section-title { font-size: 24px; }
 }
-
 </style>
+
+<script>
+// Product Count and Filter Function
+document.addEventListener('DOMContentLoaded', function() {
+    updateProductCount();
+    // Show all products by default
+    filterProducts('all');
+});
+
+function updateProductCount() {
+    var productCards = document.querySelectorAll('.product-card:not(.hidden)');
+    var totalProducts = productCards.length;
+    var countElement = document.getElementById('product-count');
+    if (countElement) {
+        countElement.textContent = totalProducts;
+    }
+}
+
+function filterProducts(collectionHandle) {
+    var productCards = document.querySelectorAll('.product-card');
+    var filterButtons = document.querySelectorAll('.filter-btn');
+    var visibleCount = 0;
+
+    // Update active button state
+    filterButtons.forEach(function(btn) {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-filter') === collectionHandle) {
+            btn.classList.add('active');
+        }
+    });
+
+    // Filter products
+    productCards.forEach(function(card) {
+        if (collectionHandle === 'all') {
+            card.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            var cardCollection = card.getAttribute('data-collection');
+            if (cardCollection === collectionHandle) {
+                card.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                card.classList.add('hidden');
+            }
+        }
+    });
+
+    // Update count display
+    var countElement = document.getElementById('product-count');
+    if (countElement) {
+        countElement.textContent = visibleCount;
+    }
+}
+
+// Heart toggle function
+function toggleHeart(element) {
+    element.classList.toggle('active');
+}
+
+// Wishlist toggle function
+function toggleWishlist(button) {
+    button.classList.toggle('active');
+    var span = butt<response clipped><NOTE>Result is longer than **10000 characters**, will be **truncated**.</NOTE>
