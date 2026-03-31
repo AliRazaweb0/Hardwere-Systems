@@ -1,17 +1,35 @@
+<!-- Filter Section -->
+<div class="filter-section">
+    <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All Systems</button>
+        <button class="filter-btn" data-filter="balustrade">Balustrade & Pool</button>
+        <button class="filter-btn" data-filter="sliding">Sliding Door</button>
+        <button class="filter-btn" data-filter="shower">Shower</button>
+        <button class="filter-btn" data-filter="canopy">Canopy & Facade</button>
+        <button class="filter-btn" data-filter="commercial">Commercial Doors & Partitions</button>
+    </div>
+
+    <!-- Section Header -->
+    <div class="section-header">
+        <p class="section-subtitle"><span id="product-count">0</span> Systems Available</p>
+        <h1 class="section-title">Systems</h1>
+    </div>
+</div>
+
 <!-- Cards Container -->
 <div class="cards-container">
   {% for product in collections.all.products %}
-    <div class="product-card">
+    <div class="product-card" data-category="{{ product.metafields.custom.category | default: 'all' }}">
         <div class="image-wrapper">
             <img src="{{ product.featured_image | img_url: '600x400' }}" 
                  alt="{{ product.title }}" class="card-image">
-            
+
             <!-- Heart Icon Top Right -->
             <div class="heart-icon-top" onclick="toggleHeart(this)" title="Like">
                 <i class="fas fa-heart"></i>
             </div>
         </div>
-        
+
         <div class="card-content">
             <!-- Product Title -->
             <h3 class="card-title">{{ product.title }}</h3>
@@ -21,7 +39,7 @@
 
             <!-- View System Button -->
             <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-            
+
             <!-- Wishlist Button -->
             <button class="wishlist-btn" onclick="toggleWishlist(this)">
                 <i class="fas fa-bookmark"></i>
@@ -33,11 +51,78 @@
 </div>
 
 <style>
+/* Filter Section Styling */
+.filter-section {
+    max-width: 1200px;
+    margin: 0 auto 30px auto;
+    padding: 0 15px;
+}
+
+/* Filter Buttons Row */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 25px;
+    justify-content: flex-start;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background-color: #fff;
+    border: 2px solid #1a1a1a;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-btn:hover {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.filter-btn.active {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+/* Section Header - Subtitle and Title */
+.section-header {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Cards Container */
 .cards-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
 
 .product-card {
@@ -144,9 +229,81 @@
 
 @media (max-width: 1024px) {
     .product-card { flex: 1 1 calc(48% - 6px); max-width: calc(48% - 6px); }
+    .filter-container { justify-content: center; }
 }
 
 @media (max-width: 768px) {
     .product-card { flex: 1 1 100%; max-width: 100%; }
+    .section-title { font-size: 28px; }
+    .filter-btn { padding: 8px 15px; font-size: 12px; }
 }
 </style>
+
+<script>
+// Product Count Function
+document.addEventListener('DOMContentLoaded', function() {
+    // Count total products
+    var productCards = document.querySelectorAll('.product-card');
+    var totalProducts = productCards.length;
+
+    // Update the count in subtitle
+    var countElement = document.getElementById('product-count');
+    if (countElement) {
+        countElement.textContent = totalProducts;
+    }
+
+    // Filter functionality
+    var filterButtons = document.querySelectorAll('.filter-btn');
+
+    filterButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to clicked button
+            this.classList.add('active');
+
+            var filterValue = this.getAttribute('data-filter');
+            var visibleCount = 0;
+
+            productCards.forEach(function(card) {
+                if (filterValue === 'all') {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    var cardCategory = card.getAttribute('data-category');
+                    if (cardCategory === filterValue) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+
+            // Update count based on visible products
+            if (countElement) {
+                countElement.textContent = visibleCount;
+            }
+        });
+    });
+});
+
+// Heart toggle function
+function toggleHeart(element) {
+    element.classList.toggle('active');
+}
+
+// Wishlist toggle function
+function toggleWishlist(button) {
+    button.classList.toggle('active');
+    var span = button.querySelector('span');
+    if (button.classList.contains('active')) {
+        span.textContent = 'Added';
+    } else {
+        span.textContent = 'Wishlist';
+    }
+}
+</script>
