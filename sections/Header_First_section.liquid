@@ -6,114 +6,113 @@
             Precision-engineered architectural hardware systems for glass,<br>
             doors, and facades. Designed for professionals who demand <br>excellence.
         </p>
-        <a href="#" class="btn">EXPLORE SYSTEMS ↓</a>
+        <a href="#system-categories" class="btn">EXPLORE SYSTEMS ↓</a>
     </div>
 </section>
 <style>
     *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family: Arial, sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* SECTION */
+.hero{
+    width: 100vw; /* Full screen width */
+    height: 100vh;
+    background:url(https://cdn.shopify.com/s/files/1/0808/8528/5103/files/imgs_7b31816e-ecb6-4d3e-b401-6683c78fc178.jpg?v=1774520152) no-repeat center/cover;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:#fff;
+}
+
+/* DARK OVERLAY */
+.hero::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+}
+
+/* CONTENT */
+.hero-content{
+    position:relative;
+    max-width:800px;
+    padding:20px;
+}
+
+.hero small{
+    letter-spacing:4px;
+    font-size:14px;
+    opacity:0.8;
+}
+
+.hero h1{
+    font-size:60px;
+    margin:20px 0;
+    font-weight:bold;
+}
+
+.hero p{
+    font-size:18px;
+    line-height:1.6;
+    opacity:0.9;
+}
+
+/* BUTTON */
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:15px 30px;
+    background:#111;
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+    letter-spacing:1px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#333;
+    transform: scale(1.05);
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+    .hero {
+        padding: 80px 30px;
+        min-height: auto;
+        height: auto;
     }
     
-    /* SECTION */
-    .hero{
-        height:100vh;
-        background:url(https://cdn.shopify.com/s/files/1/0808/8528/5103/files/imgs_7b31816e-ecb6-4d3e-b401-6683c78fc178.jpg?v=1774520152) no-repeat center/cover;
-        position:relative;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        text-align:center;
-        color:#fff;
-    }
-    
-    /* DARK OVERLAY */
-    .hero::before{
-        content:"";
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        background:rgba(0,0,0,0.5);
-    }
-    
-    /* CONTENT */
-    .hero-content{
-        position:relative;
-        max-width:800px;
-        padding:20px;
-    }
-    
-    .hero small{
-        letter-spacing:4px;
-        font-size:14px;
-        opacity:0.8;
-    }
-    
-    .hero h1{
-        font-size:60px;
-        margin:20px 0;
-        font-weight:bold;
-    }
-    
-    .hero p{
-        font-size:18px;
-        line-height:1.6;
-        opacity:0.9;
-    }
-    
-    /* BUTTON */
-    .btn{
-        display:inline-block;
-        margin-top:30px;
-        padding:15px 30px;
-        background:#111;
-        color:#fff;
-        text-decoration:none;
-        font-weight:bold;
-        letter-spacing:1px;
-        transition:0.3s;
-    }
-    
-    .btn:hover{
-        background:#333;
-    }
-    @media screen and (max-width: 768px) {
-        .hero {
-            padding: 80px 30px;
-            min-height: auto;
-            height: auto;
-        }
-        
-        .hero small {
-            font-size: 12px;
-            letter-spacing: 3px;
-        }
-        
-        .hero h1 {
-            font-size: 42px;
-            margin: 15px 0;
-        }
-        
-        .hero p {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-        
-        .hero p br {
-            display: none; /* Remove line breaks on tablet */
-        }
-        
-        .btn {
-            padding: 14px 28px;
-            font-size: 13px;
-            margin-top: 25px;
-        }
-    }
-    
+    .hero small { font-size: 12px; letter-spacing: 3px; }
+    .hero h1 { font-size: 42px; margin: 15px 0; }
+    .hero p { font-size: 16px; line-height: 1.5; }
+    .hero p br { display: none; }
+    .btn { padding: 14px 28px; font-size: 13px; margin-top: 25px; }
+}
+
+@media screen and (max-width: 480px) {
+    .hero { padding: 60px 20px; }
+    .hero-content { padding: 10px; }
+    .hero small { font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
+    .hero h1 { font-size: 32px; margin: 10px 0; line-height: 1.1; }
+    .hero p { font-size: 14px; line-height: 1.5; opacity: 0.85; }
+    .btn { padding: 12px 24px; font-size: 12px; margin-top: 20px; letter-spacing: 0.5px; }
+}
+
+@media screen and (max-width: 320px) {
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 13px; }
+    .btn { padding: 10px 20px; font-size: 11px; }
+}    
     /* ==================== */
     /* MOBILE RESPONSIVE */
     /* ==================== */
