@@ -119,41 +119,49 @@ CLEAN SHOPIFY COLLECTION + PRODUCT FILTER (NO RELOAD)
     {% endfor %}
     </div>
     
-    <script>
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const productCards = document.querySelectorAll('.product-card');
-    
-    function activateFilter(category) {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-    
-        const targetBtn = Array.from(filterButtons).find(btn => btn.dataset.category === category);
-        if (targetBtn) targetBtn.classList.add('active');
-    
-        productCards.forEach(card => {
-            if (category === 'all' || card.dataset.category === category) {
-                card.style.display = 'block';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    }
-    
-    function handleCollectionClick(e, category) {
-        e.preventDefault();
-        e.stopPropagation();
-        activateFilter(category);
-    }
-    
-    filterButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            activateFilter(btn.dataset.category);
-        });
+  const filterButtons = document.querySelectorAll('.filter-btn');
+const productCards = document.querySelectorAll('.product-card');
+
+function activateFilter(category) {
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+
+    const targetBtn = Array.from(filterButtons).find(btn => 
+        btn.dataset.category === category
+    );
+
+    if (targetBtn) targetBtn.classList.add('active');
+
+    productCards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+            card.style.display = 'flex';
+        } else {
+            card.style.display = 'none';
+        }
     });
-    
-    // default load
+}
+
+// URL se category lena
+const params = new URLSearchParams(window.location.search);
+const categoryFromURL = params.get('category');
+
+if (categoryFromURL) {
+    activateFilter(categoryFromURL);
+} else {
     activateFilter('all');
-    </script>
+}
+
+// Button click
+filterButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = btn.dataset.category;
+
+        // URL update without reload
+        history.pushState(null, '', '?category=' + category);
+
+        activateFilter(category);
+    });
+});
     
     {% schema %}
     {
