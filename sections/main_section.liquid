@@ -138,7 +138,14 @@ body {
     border-radius: 10px;
     overflow: hidden;
 }
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.product-card:hover {
+    transform: translateY(-8px); /* thoda upar uthna */
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2); /* subtle shadow */
+}
 .image-wrapper {
     position: relative;
 }
