@@ -325,7 +325,68 @@ function activateFilter(category){
 filterButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
+const filterButtons = document.querySelectorAll('.filter-btn');
+const productCards = document.querySelectorAll('.product-card');
+const productCount = document.getElementById('product-count');
+const collectionCards = document.querySelectorAll('.collection-card');
+const productSection = document.querySelector('.section-header'); // Section jahan product count hai
+
+// Function to filter products and update count
+function activateFilter(category){
+    filterButtons.forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
+    if(activeBtn) activeBtn.classList.add('active');
+
+    let count = 0;
+    productCards.forEach(card => {
+        const categories = card.dataset.category.split(',');
+        if(category === 'all' || categories.includes(category)){
+            card.style.display = 'block';
+            count++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    productCount.textContent = `${count} Systems Available`;
+}
+
+// Filter button click
+filterButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
         activateFilter(btn.dataset.category);
+        scrollToProducts();
+    });
+});
+
+// Collection card click
+collectionCards.forEach(card => {
+    card.addEventListener('click', () => {
+        activateFilter(card.dataset.category);
+        scrollToProducts();
+    });
+});
+
+// Smooth scroll function
+function scrollToProducts() {
+    productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Heart toggle
+function toggleHeart(el){
+    el.classList.toggle('active');
+}
+
+// Wishlist toggle
+function toggleWishlist(el){
+    el.classList.toggle('active');
+    const text = el.querySelector('span');
+    text.textContent = el.classList.contains('active') ? 'Saved' : 'Wishlist';
+}
+
+// Default load
+activateFilter('all');        activateFilter(btn.dataset.category);
     });
 });
 
