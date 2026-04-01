@@ -299,44 +299,19 @@ COLLECTION CARDS
 const filterButtons = document.querySelectorAll('.filter-btn');
 const productCards = document.querySelectorAll('.product-card');
 const productCount = document.getElementById('product-count');
-
-// Function to update product display and count
-function activateFilter(category){
-    filterButtons.forEach(btn => btn.classList.remove('active'));
-    const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
-    if(activeBtn) activeBtn.classList.add('active');
-
-    let count = 0;
-    productCards.forEach(card => {
-        const categories = card.dataset.category.split(',');
-        if(category === 'all' || categories.includes(category)){
-            card.style.display = 'block';
-            count++;
-        } else {
-            card.style.display = 'none';
-        }
-    });
-
-    // Update product count dynamically
-    productCount.textContent = `${count} Systems Available`;
-}
-
-// Button click
-filterButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-const filterButtons = document.querySelectorAll('.filter-btn');
-const productCards = document.querySelectorAll('.product-card');
-const productCount = document.getElementById('product-count');
 const collectionCards = document.querySelectorAll('.collection-card');
-const productSection = document.querySelector('.section-header'); // Section jahan product count hai
+const productSection = document.querySelector('.section-header'); // Product section (All Systems)
 
 // Function to filter products and update count
 function activateFilter(category){
+    // Remove active class from buttons
     filterButtons.forEach(btn => btn.classList.remove('active'));
+
+    // Add active class to current button
     const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
     if(activeBtn) activeBtn.classList.add('active');
 
+    // Show/Hide products and count
     let count = 0;
     productCards.forEach(card => {
         const categories = card.dataset.category.split(',');
@@ -348,10 +323,16 @@ function activateFilter(category){
         }
     });
 
+    // Update count
     productCount.textContent = `${count} Systems Available`;
 }
 
-// Filter button click
+// Smooth scroll to product section
+function scrollToProducts() {
+    productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Button click filtering
 filterButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -360,18 +341,13 @@ filterButtons.forEach(btn => {
     });
 });
 
-// Collection card click
+// Collection card click filtering + scroll
 collectionCards.forEach(card => {
     card.addEventListener('click', () => {
         activateFilter(card.dataset.category);
         scrollToProducts();
     });
 });
-
-// Smooth scroll function
-function scrollToProducts() {
-    productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
 // Heart toggle
 function toggleHeart(el){
@@ -384,19 +360,6 @@ function toggleWishlist(el){
     const text = el.querySelector('span');
     text.textContent = el.classList.contains('active') ? 'Saved' : 'Wishlist';
 }
-
-// Default load
-activateFilter('all');        activateFilter(btn.dataset.category);
-    });
-});
-
-// Collection card click (if you have collection cards)
-const collectionCards = document.querySelectorAll('.collection-card');
-collectionCards.forEach(card => {
-    card.addEventListener('click', () => {
-        activateFilter(card.dataset.category);
-    });
-});
 
 // Default: show all products
 activateFilter('all');
