@@ -4,7 +4,7 @@
         <h1>Hardware Systems</h1>
         <p>
             Precision-engineered architectural hardware systems for glass,<br>
-            doors, and facades. Designed for professionals who demand <br>excellence.
+            doors, and facades. Designed for professionals who demand excellence.
         </p>
         <a href="#system-categories" class="btn">EXPLORE SYSTEMS ↓</a>
     </div>
@@ -18,9 +18,14 @@
     font-family: Arial, sans-serif;
 }
 
+/* Remove horizontal scroll */
+html, body{
+    overflow-x: hidden;
+}
+
 /* SECTION */
 .hero{
-    width: 100vw; /* Full screen width */
+    width: 100%; /* Full width, fix scroll issue */
     height: 100vh;
     background:url(https://cdn.shopify.com/s/files/1/0808/8528/5103/files/imgs_7b31816e-ecb6-4d3e-b401-6683c78fc178.jpg?v=1774520152) no-repeat center/cover;
     position:relative;
@@ -114,6 +119,25 @@
     .hero p { font-size: 13px; }
     .btn { padding: 10px 20px; font-size: 11px; }
 }
+
+/* SYSTEM CATEGORIES SECTION */
+#system-categories{
+    margin-top:50px;
+    text-align:left;
+    padding: 0 20px;
+}
+
+#system-categories .collection-subtitle{
+    font-size:12px;
+    color: #00aaff; /* light zink color */
+    margin-bottom:12px;
+}
+
+#system-categories .collection-title{
+    font-size:30px;
+    color:#000;
+    margin-bottom:20px;
+}
 </style>
 
 <script>
@@ -123,7 +147,7 @@ document.querySelector('.btn').addEventListener('click', function(e){
     const target = document.querySelector('#system-categories');
     if(target){
         window.scrollTo({
-            top: target.offsetTop - 20, // small offset for padding
+            top: target.offsetTop - 20,
             behavior: 'smooth'
         });
     }
@@ -133,7 +157,7 @@ document.querySelector('.btn').addEventListener('click', function(e){
 <!-- =============================
 SYSTEM CATEGORIES SECTION
 ============================= -->
-<div id="system-categories" class="collection-header">
+<div id="system-categories">
     <p class="collection-subtitle">BROWSE BY CATEGORY</p>
     <h1 class="collection-title">System Categories</h1>
 </div>
