@@ -1,13 +1,51 @@
-<!-- =============================
-COMBINED COLLECTION + PRODUCT FILTER (FIXED)
-============================= -->
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+    padding: 40px;
+}
+
+/* ===== HEADINGS ===== */
+.section-subtitle {
+    color: #aaa; /* light zinc */
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+
+.section-title {
+    color: #000;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* ===== COLLECTION HEADER ===== */
+.collection-header {
+    margin-bottom: 20px;
+}
+
+.collection-subtitle {
+    color: #aaa;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.collection-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: #000;
+}
+
+/* ===== COLLECTION GRID ===== */
 .main-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    padding: 40px;
+    margin-bottom: 30px;
 }
 
 .main-container > div:first-child {
@@ -16,12 +54,11 @@ COMBINED COLLECTION + PRODUCT FILTER (FIXED)
 }
 
 .collection-card {
-    position: relative;
     height: 250px;
     border-radius: 10px;
-    overflow: hidden;
     background-size: cover;
     background-position: center;
+    position: relative;
     cursor: pointer;
 }
 
@@ -32,42 +69,16 @@ COMBINED COLLECTION + PRODUCT FILTER (FIXED)
     background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 }
 
-.text {
+.collection-text {
     position: absolute;
     bottom: 20px;
     left: 20px;
-    color: #fff;
-    z-index: 2;
+    color: white;
 }
 
-.cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding: 40px;
-}
-
-.product-card {
-    width: calc(33.33% - 14px);
-    background: #fff;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.product-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.card-content {
-    padding: 15px;
-}
-
+/* ===== FILTER BUTTON ===== */
 .filter-container {
-    padding: 20px 40px;
+    margin-bottom: 20px;
 }
 
 .filter-btn {
@@ -75,13 +86,86 @@ COMBINED COLLECTION + PRODUCT FILTER (FIXED)
     border: 1px solid #ccc;
     cursor: pointer;
     margin-right: 5px;
+    background: white;
 }
 
 .filter-btn.active {
     background: black;
     color: white;
 }
+
+/* ===== PRODUCT CARDS ===== */
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product-card {
+    width: calc(33.33% - 14px);
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.image-wrapper {
+    position: relative;
+}
+
+.card-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* HEART ICON */
+.heart-icon-top {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.heart-icon-top.active {
+    color: red;
+}
+
+/* CONTENT */
+.card-content {
+    padding: 15px;
+}
+
+.view-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: blue;
+}
+
+/* WISHLIST */
+.wishlist-btn {
+    margin-top: 10px;
+    padding: 8px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+}
+
+.wishlist-btn.active {
+    background: red;
+    color: white;
+}
 </style>
+
+<!-- =============================
+COLLECTION HEADER
+============================= -->
+<div class="collection-header">
+    <p class="collection-subtitle">BROWSE BY CATEGORY</p>
+    <h1 class="collection-title">System Categories</h1>
+</div>
 
 <!-- =============================
 COLLECTION CARDS
@@ -92,7 +176,7 @@ COLLECTION CARDS
        data-category="{{ collection.handle }}"
        style="background-image:url('{{ collection.image | image_url: width: 1000 }}')">
 
-    <div class="text">
+    <div class="collection-text">
       <h3>{{ collection.title }}</h3>
     </div>
   </div>
@@ -100,8 +184,14 @@ COLLECTION CARDS
 </div>
 
 <!-- =============================
-FILTER BUTTONS
+PRODUCT HEADER
 ============================= -->
+<div>
+    <p class="section-subtitle">{{ collections.all.products_count }} Systems Available</p>
+    <h1 class="section-title">Systems</h1>
+</div>
+
+<!-- FILTER BUTTONS -->
 <div class="filter-container">
   <button class="filter-btn active" data-category="all">All</button>
   {% for collection in collections %}
@@ -119,11 +209,26 @@ PRODUCTS
   <div class="product-card"
        data-category="{% for c in product.collections %}{{ c.handle }}{% unless forloop.last %},{% endunless %}{% endfor %}">
     
-    <img src="{{ product.featured_image | img_url: '600x600' }}">
-    
+    <div class="image-wrapper">
+        <img src="{{ product.featured_image | img_url: '600x600' }}" class="card-image">
+
+        <!-- HEART -->
+        <div class="heart-icon-top" onclick="toggleHeart(this)">
+            <i class="fas fa-heart"></i>
+        </div>
+    </div>
+
     <div class="card-content">
-      <h4>{{ product.title }}</h4>
-      <a href="{{ product.url }}">View</a>
+        <h4>{{ product.title }}</h4>
+
+        <!-- VIEW SYSTEM -->
+        <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+
+        <!-- WISHLIST -->
+        <button class="wishlist-btn" onclick="toggleWishlist(this)">
+            <i class="fas fa-bookmark"></i>
+            <span>Wishlist</span>
+        </button>
     </div>
 
   </div>
@@ -131,36 +236,31 @@ PRODUCTS
 </div>
 
 <!-- =============================
-SCRIPT (FINAL CLEAN)
+SCRIPT
 ============================= -->
 <script>
 const filterButtons = document.querySelectorAll('.filter-btn');
 const productCards = document.querySelectorAll('.product-card');
 const collectionCards = document.querySelectorAll('.collection-card');
 
-// MAIN FILTER FUNCTION
 function activateFilter(category) {
 
-    // active button
     filterButtons.forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
     if(activeBtn) activeBtn.classList.add('active');
 
-    // filter products
     productCards.forEach(card => {
-
         const categories = card.dataset.category.split(',');
 
         if(category === 'all' || categories.includes(category)) {
-            card.style.display = 'flex';
+            card.style.display = 'block';
         } else {
             card.style.display = 'none';
         }
-
     });
 }
 
-// BUTTON CLICK
+/* BUTTON CLICK */
 filterButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -168,21 +268,33 @@ filterButtons.forEach(btn => {
     });
 });
 
-// COLLECTION CLICK → FILTER TRIGGER
+/* COLLECTION CLICK */
 collectionCards.forEach(card => {
     card.addEventListener('click', () => {
         activateFilter(card.dataset.category);
     });
 });
 
-// DEFAULT LOAD
+/* HEART */
+function toggleHeart(el){
+    el.classList.toggle('active');
+}
+
+/* WISHLIST */
+function toggleWishlist(el){
+    el.classList.toggle('active');
+    const text = el.querySelector('span');
+    text.textContent = el.classList.contains('active') ? 'Saved' : 'Wishlist';
+}
+
+/* DEFAULT */
 activateFilter('all');
 </script>
 
 {% schema %}
 {
-  "name": "Collection Filter Clean",
+  "name": "Final System Filter",
   "settings": [],
-  "presets": [{"name": "Collection Filter Clean"}]
+  "presets": [{"name": "Final System Filter"}]
 }
 {% endschema %}
