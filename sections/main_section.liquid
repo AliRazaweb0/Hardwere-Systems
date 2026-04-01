@@ -220,19 +220,18 @@ PRODUCTS
             <i class="fas fa-heart"></i>
         </div>
     </div>
+<div class="card-content">
+    <h4>{{ product.title }}</h4>
 
-    <div class="card-content">
-        <h4>{{ product.title }}</h4>
+    <!-- VIEW SYSTEM -->
+    <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
 
-        <!-- VIEW SYSTEM -->
-        <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
-
-        <!-- WISHLIST -->
-        <button class="wishlist-btn" onclick="toggleWishlist(this)">
-            <i class="fas fa-bookmark"></i>
-            <span>Wishlist</span>
-        </button>
-    </div>
+    <!-- WISHLIST -->
+    <button class="wishlist-btn" onclick="toggleWishlist(this)">
+        <i class="fas fa-bookmark"></i>
+        <span>Wishlist</span>
+    </button>
+</div>
 
   </div>
 {% endfor %}
