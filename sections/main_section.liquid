@@ -86,15 +86,14 @@ CLEAN SHOPIFY COLLECTION + PRODUCT FILTER (NO RELOAD)
     <!-- COLLECTIONS -->
     <div class="main-container">
     {% for collection in collections %}
-      <div class="collection-card"
-           onclick="handleCollectionClick(event, '{{ collection.title }}')"
-           data-category="{{ collection.title }}"
-           style="background-image:url('{{ collection.image | image_url: width: 1000 }}')">
-    
-        <div class="text">
-          <h3>{{ collection.title }}</h3>
-        </div>
-      </div>
+      <a href="/?category={{ collection.title }}" class="collection-card"
+   data-category="{{ collection.title }}"
+   style="background-image:url('{{ collection.image | image_url: width: 1000 }}')">
+
+    <div class="text">
+        <h3>{{ collection.title }}</h3>
+    </div>
+</a>
     {% endfor %}
     </div>
     
@@ -118,7 +117,7 @@ CLEAN SHOPIFY COLLECTION + PRODUCT FILTER (NO RELOAD)
       </div>
     {% endfor %}
     </div>
-    
+    <script>
   const filterButtons = document.querySelectorAll('.filter-btn');
 const productCards = document.querySelectorAll('.product-card');
 
@@ -162,7 +161,7 @@ filterButtons.forEach(btn => {
         activateFilter(category);
     });
 });
-    
+    </script>
     {% schema %}
     {
       "name": "Collection Filter Clean",
