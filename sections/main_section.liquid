@@ -1,5 +1,5 @@
 <!-- =============================
-CLEAN SHOPIFY COLLECTION + PRODUCT FILTER (NO RELOAD)
+COMBINED COLLECTION + PRODUCT FILTER (FIXED)
 ============================= -->
 
 <style>
@@ -83,12 +83,13 @@ CLEAN SHOPIFY COLLECTION + PRODUCT FILTER (NO RELOAD)
 }
 </style>
 
-<!-- COLLECTIONS -->
+<!-- =============================
+COLLECTION CARDS
+============================= -->
 <div class="main-container">
 {% for collection in collections %}
   <div class="collection-card"
-       onclick="handleCollectionClick(event, '{{ collection.title }}')"
-       data-category="{{ collection.title }}"
+       data-category="{{ collection.handle }}"
        style="background-image:url('{{ collection.image | image_url: width: 1000 }}')">
 
     <div class="text">
@@ -98,52 +99,68 @@ CLEAN SHOPIFY COLLECTION + PRODUCT FILTER (NO RELOAD)
 {% endfor %}
 </div>
 
-<!-- FILTER BUTTONS -->
+<!-- =============================
+FILTER BUTTONS
+============================= -->
 <div class="filter-container">
   <button class="filter-btn active" data-category="all">All</button>
   {% for collection in collections %}
-    <button class="filter-btn" data-category="{{ collection.title }}">{{ collection.title }}</button>
+    <button class="filter-btn" data-category="{{ collection.handle }}">
+      {{ collection.title }}
+    </button>
   {% endfor %}
 </div>
 
-<!-- PRODUCTS -->
+<!-- =============================
+PRODUCTS
+============================= -->
 <div class="cards-container">
 {% for product in collections.all.products %}
-  <div class="product-card" data-category="{{ product.collections.first.title }}">
+  <div class="product-card"
+       data-category="{% for c in product.collections %}{{ c.handle }}{% unless forloop.last %},{% endunless %}{% endfor %}">
+    
     <img src="{{ product.featured_image | img_url: '600x600' }}">
+    
     <div class="card-content">
       <h4>{{ product.title }}</h4>
       <a href="{{ product.url }}">View</a>
     </div>
+
   </div>
 {% endfor %}
 </div>
 
+<!-- =============================
+SCRIPT (FINAL CLEAN)
+============================= -->
 <script>
 const filterButtons = document.querySelectorAll('.filter-btn');
 const productCards = document.querySelectorAll('.product-card');
+const collectionCards = document.querySelectorAll('.collection-card');
 
+// MAIN FILTER FUNCTION
 function activateFilter(category) {
+
+    // active button
     filterButtons.forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
+    if(activeBtn) activeBtn.classList.add('active');
 
-    const targetBtn = Array.from(filterButtons).find(btn => btn.dataset.category === category);
-    if (targetBtn) targetBtn.classList.add('active');
-
+    // filter products
     productCards.forEach(card => {
-        if (category === 'all' || card.dataset.category === category) {
-            card.style.display = 'block';
+
+        const categories = card.dataset.category.split(',');
+
+        if(category === 'all' || categories.includes(category)) {
+            card.style.display = 'flex';
         } else {
             card.style.display = 'none';
         }
+
     });
 }
 
-function handleCollectionClick(e, category) {
-    e.preventDefault();
-    e.stopPropagation();
-    activateFilter(category);
-}
-
+// BUTTON CLICK
 filterButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -151,7 +168,14 @@ filterButtons.forEach(btn => {
     });
 });
 
-// default load
+// COLLECTION CLICK → FILTER TRIGGER
+collectionCards.forEach(card => {
+    card.addEventListener('click', () => {
+        activateFilter(card.dataset.category);
+    });
+});
+
+// DEFAULT LOAD
 activateFilter('all');
 </script>
 
