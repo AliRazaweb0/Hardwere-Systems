@@ -249,10 +249,10 @@ COLLECTION CARDS
 </div>
 
 <!-- =============================
-PRODUCT HEADER
+// PRODUCT HEADER
 ============================= -->
 <div class="section-header">
-    <p class="section-subtitle">{{ collections.all.products_count }} Systems Available</p>
+    <p class="section-subtitle" id="product-count">{{ collections.all.products_count }} Systems Available</p>
     <h1 class="section-title">Systems</h1>
 </div>
 
@@ -266,9 +266,7 @@ PRODUCT HEADER
   {% endfor %}
 </div>
 
-<!-- =============================
-PRODUCTS
-============================= -->
+<!-- PRODUCTS -->
 <div class="cards-container">
 {% for product in collections.all.products %}
   <div class="product-card"
@@ -276,58 +274,54 @@ PRODUCTS
     
     <div class="image-wrapper">
         <img src="{{ product.featured_image | img_url: '600x600' }}" class="card-image">
-
-        <!-- HEART -->
         <div class="heart-icon-top" onclick="toggleHeart(this)">
             <i class="fas fa-heart"></i>
         </div>
     </div>
-<div class="card-content">
-    <h4>{{ product.title }}</h4>
 
-    <!-- VIEW SYSTEM -->
-    <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
+    <div class="card-content">
+        <h4>{{ product.title }}</h4>
+        <a href="{{ product.url }}" class="view-link">VIEW SYSTEM</a>
 
-    <!-- WISHLIST -->
-    <div class="wishlisting">
-    <button class="wishlist-btn" onclick="toggleWishlist(this)">
-        <i class="fas fa-bookmark"></i>
-        <span>Wishlist</span>
-    </button>
-</div>
-</div>
+        <button class="wishlist-btn" onclick="toggleWishlist(this)">
+            <i class="fas fa-bookmark"></i>
+            <span>Wishlist</span>
+        </button>
+    </div>
 
   </div>
 {% endfor %}
 </div>
 
-<!-- =============================
-SCRIPT
-============================= -->
+
 <script>
+// Get references
 const filterButtons = document.querySelectorAll('.filter-btn');
 const productCards = document.querySelectorAll('.product-card');
-const collectionCards = document.querySelectorAll('.collection-card');
-const productSection = document.querySelector('.section-header'); // Scroll target
+const productCount = document.getElementById('product-count');
 
-function activateFilter(category) {
-    // Active button
+// Function to update product display and count
+function activateFilter(category){
     filterButtons.forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
     if(activeBtn) activeBtn.classList.add('active');
 
-    // Filter products
+    let count = 0;
     productCards.forEach(card => {
         const categories = card.dataset.category.split(',');
-        if(category === 'all' || categories.includes(category)) {
+        if(category === 'all' || categories.includes(category)){
             card.style.display = 'block';
+            count++;
         } else {
             card.style.display = 'none';
         }
     });
+
+    // Update product count dynamically
+    productCount.textContent = `${count} Systems Available`;
 }
 
-/* BUTTON CLICK */
+// Button click
 filterButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -335,32 +329,17 @@ filterButtons.forEach(btn => {
     });
 });
 
-/* COLLECTION CLICK */
+// Collection card click (if you have collection cards)
+const collectionCards = document.querySelectorAll('.collection-card');
 collectionCards.forEach(card => {
     card.addEventListener('click', () => {
         activateFilter(card.dataset.category);
-
-        // Scroll smoothly to products section
-        productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 
-/* HEART */
-function toggleHeart(el){
-    el.classList.toggle('active');
-}
-
-/* WISHLIST */
-function toggleWishlist(el){
-    el.classList.toggle('active');
-    const text = el.querySelector('span');
-    text.textContent = el.classList.contains('active') ? 'Saved' : 'Wishlist';
-}
-
-/* DEFAULT */
+// Default: show all products
 activateFilter('all');
 </script>
-
 {% schema %}
 {
   "name": "Final System Filter",
