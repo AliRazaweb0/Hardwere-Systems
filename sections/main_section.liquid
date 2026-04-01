@@ -191,6 +191,7 @@ COLLECTION HEADER
 <!-- =============================
 COLLECTION CARDS
 ============================= -->
+<!-- COLLECTION CARDS -->
 <div class="main-container">
 {% for collection in collections %}
   <div class="collection-card"
@@ -198,7 +199,16 @@ COLLECTION CARDS
        style="background-image:url('{{ collection.image | image_url: width: 1000 }}')">
 
     <div class="collection-text">
-      <h3>{{ collection.title }}</h3>
+      <!-- COLLECTION TITLE -->
+      <h3 class="collection-title">{{ collection.title }}</h3>
+
+      <!-- COLLECTION DESCRIPTION -->
+      <p class="collection-description">
+        Precision-engineered shower screen hardware and enclosure systems for modern bathrooms.
+      </p>
+
+      <!-- EXPLORE BUTTON -->
+      <a href="{{ collection.url }}" class="explore-btn">Explore Systems</a>
     </div>
   </div>
 {% endfor %}
