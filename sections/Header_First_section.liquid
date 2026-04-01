@@ -175,6 +175,21 @@ SYSTEM CATEGORIES SECTION
         }
     }
     </style>
+    </style>
+
+<script>
+// Smooth scroll to System Categories
+document.querySelector('.btn').addEventListener('click', function(e){
+    e.preventDefault();
+    const target = document.querySelector('#system-categories');
+    if(target){
+        window.scrollTo({
+            top: target.offsetTop - 20, // small offset for padding
+            behavior: 'smooth'
+        });
+    }
+});
+</script>
 
      {% schema %}
 {
