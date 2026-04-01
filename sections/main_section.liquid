@@ -245,16 +245,17 @@ SCRIPT
 const filterButtons = document.querySelectorAll('.filter-btn');
 const productCards = document.querySelectorAll('.product-card');
 const collectionCards = document.querySelectorAll('.collection-card');
+const productSection = document.querySelector('.section-header'); // Scroll target
 
 function activateFilter(category) {
-
+    // Active button
     filterButtons.forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.querySelector(`.filter-btn[data-category="${category}"]`);
     if(activeBtn) activeBtn.classList.add('active');
 
+    // Filter products
     productCards.forEach(card => {
         const categories = card.dataset.category.split(',');
-
         if(category === 'all' || categories.includes(category)) {
             card.style.display = 'block';
         } else {
@@ -275,6 +276,9 @@ filterButtons.forEach(btn => {
 collectionCards.forEach(card => {
     card.addEventListener('click', () => {
         activateFilter(card.dataset.category);
+
+        // Scroll smoothly to products section
+        productSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 
