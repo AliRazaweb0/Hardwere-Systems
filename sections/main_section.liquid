@@ -144,19 +144,26 @@ body {
     text-decoration: none;
 }
 
-.wishlist-btn {
-    margin-top: 8px; /* small space below view link */
+.wishlisting .wishlist-btn {
+    margin-top: 8px; 
     padding: 8px;
     border: none;
     background: #eee;
     cursor: pointer;
     border-radius: 6px;
+    transition: transform 0.2s ease, background 0.2s ease; /* smooth zoom */
 }
 
-.wishlist-btn.active {
+.wishlisting .wishlist-btn:hover {
+    transform: scale(1.2); /* zoom in on hover */
+    background: #ddd; /* optional subtle color change */
+}
+
+.wishlisting .wishlist-btn.active {
     background: red;
     color: white;
 }
+
 .wishlisting .wishlist-btn.active:hover {
     transform: scale(1.2);
     background: #c0392b; /* darker red when active hover */
