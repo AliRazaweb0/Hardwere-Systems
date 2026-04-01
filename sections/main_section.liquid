@@ -53,12 +53,18 @@ body {
 }
 
 .collection-card {
-    height: 300px;
+    height: 270px; /* updated height as per previous request */
     border-radius: 10px;
     background-size: cover;
     background-position: center;
     position: relative;
     cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* smooth hover */
+}
+
+.collection-card:hover {
+    transform: scale(1.05); /* zoom slightly on hover */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* subtle shadow */
 }
 
 .collection-card::before {
