@@ -21,13 +21,11 @@
 /* Remove horizontal scroll */
 html, body{
     overflow-x: hidden;
-    margin:0;
-    padding:0;
 }
 
 /* SECTION */
 .hero{
-    width: 100vw; /* full width */
+    width: 100%; /* Full width, fix scroll issue */
     height: 100vh;
     background:url(https://cdn.shopify.com/s/files/1/0808/8528/5103/files/imgs_7b31816e-ecb6-4d3e-b401-6683c78fc178.jpg?v=1774520152) no-repeat center/cover;
     position:relative;
@@ -94,7 +92,12 @@ html, body{
 
 /* RESPONSIVE */
 @media screen and (max-width: 768px) {
-    .hero { height:auto; padding:80px 0; }
+    .hero {
+        padding: 80px 30px;
+        min-height: auto;
+        height: auto;
+    }
+    
     .hero small { font-size: 12px; letter-spacing: 3px; }
     .hero h1 { font-size: 42px; margin: 15px 0; }
     .hero p { font-size: 16px; line-height: 1.5; }
@@ -103,7 +106,7 @@ html, body{
 }
 
 @media screen and (max-width: 480px) {
-    .hero { padding: 60px 10px; }
+    .hero { padding: 60px 20px; }
     .hero-content { padding: 10px; }
     .hero small { font-size: 11px; letter-spacing: 2px; margin-bottom: 10px; }
     .hero h1 { font-size: 32px; margin: 10px 0; line-height: 1.1; }
@@ -115,6 +118,25 @@ html, body{
     .hero h1 { font-size: 26px; }
     .hero p { font-size: 13px; }
     .btn { padding: 10px 20px; font-size: 11px; }
+}
+
+/* SYSTEM CATEGORIES SECTION */
+#system-categories{
+    margin-top:50px;
+    text-align:left;
+    padding: 0 20px;
+}
+
+#system-categories .collection-subtitle{
+    font-size:12px;
+    color: #00aaff; /* light zink color */
+    margin-bottom:12px;
+}
+
+#system-categories .collection-title{
+    font-size:30px;
+    color:#000;
+    margin-bottom:20px;
 }
 </style>
 
@@ -131,3 +153,11 @@ document.querySelector('.btn').addEventListener('click', function(e){
     }
 });
 </script>
+
+<!-- =============================
+SYSTEM CATEGORIES SECTION
+============================= -->
+<div id="system-categories">
+    <p class="collection-subtitle">BROWSE BY CATEGORY</p>
+    <h1 class="collection-title">System Categories</h1>
+</div>
