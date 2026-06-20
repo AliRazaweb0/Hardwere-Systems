@@ -1,46 +1,48 @@
 <style>
-<h1>{{ section.settings.aling1 }}</h1>
+
 </style>
 
 <div class="header">
-<h1>{{ section.settings.head }}</h1>
-{{section.settings.luckynum }}
+<h1>This is our heading</h1>
 
 
 
 
 </div>
 
+
+
+
+
+
+
+
 {% schema %}
 {
-"name": "header",
-"blocks": [],
+"name": "Heading",
 "settings": [
-{
-"type": "text",
-"id": "head",
-"label": "Heading",
-"default":"I LOVE PAKISTAN"
-},
-{
-"type": "number",
-"id": "luckynum",
-"label": "Lucky Number"
-},
-
-
+    {
+    "type": "text",
+"id": "heading_text",
+"label": "Heading"
+}
 ],
+"blocks": [],
 "presets": [
-{
-"name": "class 1"
-}
-    
-],
-
+    {
+    "name": "Class 1"
+    }
+]
 
 
 }
+
 
 
 
 {% endschema %}
+
+
+
+
+
