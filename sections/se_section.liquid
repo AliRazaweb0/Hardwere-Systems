@@ -15,9 +15,9 @@ text-align:{{ section.settings.text_align }};
 
 </style>
 <div class="header">
-
+{% if section.settings.check_box == true %}
 <h1>{{ section.settings.heading_text }}</h1>
-
+{% endif %}
 
 
 
@@ -89,6 +89,11 @@ text-align:{{ section.settings.text_align }};
     
 ]
 
+},
+{
+"type": "checkbox",
+"id": "check_box",
+"label": "Check Box",
 }
 ],
 "blocks": [],
