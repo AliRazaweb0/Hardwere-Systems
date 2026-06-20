@@ -1,17 +1,18 @@
 <style>
 
 </style>
-
 <div class="header">
+
 <h1>{{ section.settings.heading_text }}</h1>
 
 
 
+
 </div>
+<div class="para">
 
-
-
-
+<p> {{ section.settings.paragraph }}</p>
+</div>
 
 
 
@@ -24,6 +25,12 @@
     "type": "text",
 "id": "heading_text",
 "label": "Heading"
+},
+{
+"type": "text",
+"id": "paragraph",
+"label": "Write Paragraph",
+"default":"Write your brand paragraph",
 }
 ],
 "blocks": [],
