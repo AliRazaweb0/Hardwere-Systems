@@ -101,10 +101,10 @@
         "heading_text": "wrqwer",
         "paragraph": "kjdh;wi;fhwsf;ehfihwRDHIWY8TFOWEHCBWKYR2DKLIFYUWETDTGASKNYUW9",
         "mynum": 786,
-        "padding_top": 100,
-        "font_size": 15,
+        "padding_top": 12,
+        "font_size": 83,
         "text_align": "center",
-        "check_box": false
+        "check_box": true
       }
     }
   },
