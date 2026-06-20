@@ -16,6 +16,7 @@ margin-left:30px;
 <div class="para">
 
 <p> {{ section.settings.paragraph }}</p>
+{{ section.settings.mynum }}
 </div>
 
 
@@ -35,6 +36,23 @@ margin-left:30px;
 "id": "paragraph",
 "label": "Write Paragraph",
 "default":"Write your brand paragraph",
+},
+{
+"type": "number",
+"id": "mynum",
+"label": "My Number",
+"default":786
+},
+{
+"type": "range",
+"id": "padding",
+"label": "Padding",
+"step": 1,
+"unit": "rem",
+"min": 1,
+"max": 100,
+"default":2
+
 }
 ],
 "blocks": [],
