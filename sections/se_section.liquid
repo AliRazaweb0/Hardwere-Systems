@@ -8,6 +8,7 @@ h1{
    
 padding-top:{{ section.settings.padding_top }}px;
 font-size:{{ section.settings.font_size }}px;
+text-align:{{ section.settings.text_align }};
 },
 
 
@@ -71,9 +72,25 @@ font-size:{{ section.settings.font_size }}px;
 "unit": "px",
 "default":15,
 "step": 1,
-
-
-
+},
+{
+"type": "select",
+"id": "text_align",
+"label": "Text Alignment",
+"options": [
+    {
+    "value": "left",
+    "label": "Left Align"
+    },
+    {
+    "value": "center",
+    "label": "Center Align"
+    },
+    {
+    "value": "right",
+    "label": "Right Align"
+    },
+]
 
 }
 ],
