@@ -55,9 +55,18 @@
         "padding-block-start": 40,
         "padding-block-end": 80
       }
+    },
+    "se_section_HkBJCb": {
+      "type": "se_section",
+      "name": "Class 1",
+      "settings": {
+        "heading_text": "This is my paragraph understand",
+        "paragraph": "Write your brand parafgfyiutitjytrgraph"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "se_section_HkBJCb"
   ]
 }
