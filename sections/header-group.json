@@ -92,15 +92,23 @@
     "main_section_rqeQHf": {
       "type": "main_section",
       "name": "Mainsection",
+      "settings": {}
+    },
+    "se_section_qC6wYf": {
+      "type": "se_section",
+      "name": "Class 1",
       "settings": {
-        "subtitle": "BROWSE BY CATEGORY",
-        "title": "System Categories"
+        "heading_text": "wrqwer",
+        "paragraph": "kjdh;wi;fhwsf;ehfihwRDHIWY8TFOWEHCBWKYR2DKLIFYUWETDTGASKNYUW9",
+        "mynum": 786,
+        "padding_top": 100
       }
     }
   },
   "order": [
     "header_section",
     "header_first_section_MXFRyj",
-    "main_section_rqeQHf"
+    "main_section_rqeQHf",
+    "se_section_qC6wYf"
   ]
 }

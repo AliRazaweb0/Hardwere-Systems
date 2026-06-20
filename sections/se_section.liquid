@@ -5,7 +5,7 @@ margin-top: 20px;
 margin-left:30px;
 },
 h1{
-    {if{{ section.settings.padding_top }}>0
+   
 padding_top:{{ section.settings.padding_top }} rem;
 }
 }
@@ -22,7 +22,9 @@ padding_top:{{ section.settings.padding_top }} rem;
 <div class="para">
 
 <p> {{ section.settings.paragraph }}</p>
+ {%if section.settings.padding_top >0 %}
 {{ section.settings.mynum }}
+ {% endif %}
 </div>
 
 
